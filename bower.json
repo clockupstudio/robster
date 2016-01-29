@@ -1,0 +1,21 @@
+{
+  "name": "robster",
+  "description": "Game we made at Game Jam 2016.",
+  "main": "index.js",
+  "authors": [
+    "Tanakrit Saisillapee <zixsma@hotmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/clockupstudio/robster",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser": "^2.4.4"
+  }
+}

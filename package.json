@@ -1,0 +1,22 @@
+{
+  "name": "robster",
+  "version": "1.0.0",
+  "description": "Game we made at Game Jam 2016.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clockupstudio/robster.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clockupstudio/robster/issues"
+  },
+  "homepage": "https://github.com/clockupstudio/robster#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
+}
