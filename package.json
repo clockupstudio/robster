@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/clockupstudio/robster#readme",
   "devDependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "^0.4.5",
+    "grunt-typescript": "^0.8.0"
   }
 }
