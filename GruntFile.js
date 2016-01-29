@@ -2,6 +2,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -31,8 +32,22 @@ module.exports = function(grunt) {
                     keepalive: true
                 }
             }
+        },
+        
+        copy: {
+            main: {
+                files: [
+                    {
+                    expand: true,
+                    src: ['bower_components/phaser/build/phaser.min.js'],
+                    dest: 'bin/js',
+                    filter: 'isFile',
+                    flatten: true
+                }
+                ]
+            }
         }
     });
 
-    grunt.registerTask('run', ['typescript', 'concat', 'connect']);
+    grunt.registerTask('run', ['typescript', 'concat', 'copy', 'connect']);
 };
