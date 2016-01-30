@@ -16,7 +16,7 @@ var rightKey;
 var spaceBarKey;
 var hitKey: Phaser.Key;
 var died;
-var overlay_text;
+var overlay_text: Phaser.Text;
 var fireDirection = 150;
 
 function display() {
@@ -74,6 +74,7 @@ function create() {
     overlay_text = this.game.add.text(0, 0, 'press [space] to restart', style);
     overlay_text.setTextBounds(0, 100, 1280, 720);
     overlay_text.visible = died;
+    overlay_text.fixedToCamera = true;
 }
 
 function update() {
