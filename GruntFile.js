@@ -48,6 +48,7 @@ module.exports = function(grunt) {
             }
         }
     });
-
+    
+    grunt.registerTask('build', ['typescript', 'concat', 'copy']);
     grunt.registerTask('run', ['typescript', 'concat', 'copy', 'connect']);
 };
