@@ -7,6 +7,7 @@ class Player extends Phaser.Sprite {
     isDisable:boolean = false;
     jumpping:boolean = false;
     isFiring:boolean = false;
+    isDead:boolean = false;
     fireArray:Array<Phaser.Sprite>;
     
     constructor(game: Phaser.Game) {
@@ -125,9 +126,7 @@ class Player extends Phaser.Sprite {
         this.animations.play('hit');
         this.disable();
         
-        this.game.time.events.add(500, () => {
-            this.animations.play('die').onComplete.add(this.disable, this);
-        }, this);
+        this.game.time.events.add(500, this.dead, this);
         
         var striking:Phaser.Tween = this.game.add.tween(this);
         striking.to({x:(this.x-50)}, 100);
@@ -135,6 +134,7 @@ class Player extends Phaser.Sprite {
     }
     
     dead() {
+        this.isDead = true;
         this.animations.play('die').onComplete.add(this.disable, this);
     }
 }

@@ -111,7 +111,7 @@ function update() {
         });
     }
 
-    if (spaceBarKey.isDown && died) {
+    if (spaceBarKey.isDown && player.isDead) {
         game.state.restart();
     } 
 }
