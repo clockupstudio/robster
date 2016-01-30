@@ -34,6 +34,9 @@ class Player extends Phaser.Sprite {
         if (this.jumpping) {
             return;
         }
+        if(this.isDead){
+            return;
+        }
         this.animations.play('idle');
     }
     
