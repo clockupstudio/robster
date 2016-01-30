@@ -1,4 +1,5 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
+/// <reference path="./sequential_frame_order_generater.ts" />
 /// <reference path="./player.ts" />
 /// <reference path="./bat.ts" />
 
@@ -20,8 +21,8 @@ function display() {
 }
 
 function preload() {
-    game.load.spritesheet('player', 'assets/images/player.png', 80, 160);
-    game.load.spritesheet('bat', 'assets/images/bat-sprite.png', 80, 80,2);
+    game.load.spritesheet('player', 'assets/images/player.png', 160, 160, 16);
+    game.load.spritesheet('bat', 'assets/images/bat-sprite.png', 80, 80, 2);
 }
 
 function create() {
@@ -42,13 +43,13 @@ function update() {
     
     if (leftKey.isDown) {
         player.moveLeft();
-       
     } else if (rightKey.isDown) {
         player.moveRight();
-    }
-    else if (spaceBarKey.isDown) {
+    } else if (spaceBarKey.isDown) {
         game.state.restart();
         game.stage.backgroundColor = '#000000';
+    } else {
+        player.idle();
     }
 }
 
