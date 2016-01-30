@@ -40,6 +40,8 @@ function create() {
     
     var background = game.add.sprite(0, 0, 'background');
     background.fixedToCamera = true;
+    background.scale.x = 0.65;
+    background.scale.y = 0.65;
     
     ground = game.add.tileSprite(0, 640, 2560, 640, 'ground');
     game.world.setBounds(0, 0, 2560, 0);
