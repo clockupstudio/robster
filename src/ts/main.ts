@@ -131,11 +131,6 @@ function collisionEnemy(fireball) {
 
 function collisionHandler() {
     player.gotHit();
-    
-    // game.time.events.add(500, ()=> {
-    //     died = true;
-    //     overlay_text.visible = true;
-    // });
 }
 
 function collisionEat() {
