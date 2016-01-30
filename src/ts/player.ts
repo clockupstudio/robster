@@ -60,7 +60,7 @@ class Player extends Phaser.Sprite {
         
         this.disable();
         
-        game.time.events.add(500, () => {
+        this.game.time.events.add(500, () => {
             this.dead();
         }, this);
         
