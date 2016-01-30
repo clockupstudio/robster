@@ -52,6 +52,10 @@ class Player extends Phaser.Sprite {
     }
 
     gotHit() {
+        if(this.isDisable){
+            return;
+        }
+        
         this.animations.play('idle');
         
         this.disable();
@@ -62,7 +66,7 @@ class Player extends Phaser.Sprite {
         
         var striking:Phaser.Tween = this.game.add.tween(this);
         
-        striking.to({x:-1});
+        striking.to({x:(this.x-50)}, 100);
         striking.start();
     }
     
