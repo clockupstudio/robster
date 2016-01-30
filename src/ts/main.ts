@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => display());
 
 var game;
+var player;
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -16,7 +17,11 @@ function preload() {
 }
 
 function create() {
-    var player = game.add.sprite(160, 640, 'player');
+    initPlayer();
+}
+
+function initPlayer() {
+    player = game.add.sprite(160, 640, 'player');
     player.anchor.x = 0;
     player.anchor.y = 1;
 }
