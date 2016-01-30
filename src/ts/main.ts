@@ -112,10 +112,11 @@ function update() {
     }
 }
 
-function collisionEnemy() {
+function collisionEnemy(fireball) {
     enemy.disable();
     enemy.idle();
     enemy.fall();
+    fireball.visible = false;
 }
 
 function collisionHandler() {
