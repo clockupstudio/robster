@@ -19,21 +19,21 @@ function display() {
 
 function preload() {
     game.load.spritesheet('player', 'assets/images/player.png', 80, 160);
+    game.load.image('bat', 'assets/images/bat.png', 80, 80);
 }
 
 function create() {
     initPlayer();
+    initialEnemy1();
   
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-    initialEnemy1();
 }
 
 function initPlayer() {
     player = game.add.sprite(160, 640, 'player');
     player.anchor.x = 0;
     player.anchor.y = 1;
-    game.load.image('bat', 'assets/images/bat.png');
 }
 
 
