@@ -1,14 +1,15 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
 /// <reference path="./player.ts" />
+/// <reference path="./bat.ts" />
 
 document.addEventListener('DOMContentLoaded', () => display());
 
 var game;
-var enemy1;
+var enemy;
 var player;
 var leftKey;
 var rightKey;
-var stepMove = 2.5;
+var spaceBarKey;
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -27,32 +28,17 @@ function create() {
     player = new Player(game);
     game.add.existing(player);
     
-    initialEnemy1();
-  
+    enemy = new Bat(game);
+    game.add.existing(enemy);
+    enemy.fly();
+
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-}
-
-function initialEnemy1() {
-    enemy1 = game.add.sprite(1280, 520, 'bat');
-    enemy1.width = 80;
-    enemy1.height = 80;
-    game.physics.enable(enemy1, Phaser.Physics.ARCADE);
-
-    var demoTween = game.add.tween(enemy1)
-    .to({x:1120,y:400})
-    .to({x:960,y:520})
-    .to({x:800,y:400})
-    .to({x:640,y:520})
-    .to({x:480,y:400})
-    .to({x:320,y:520})
-    .to({x:160,y:400})
-    .to({x:-80,y:520});
-    demoTween.start();    
+    spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 }
 
 function update() {
-    game.physics.arcade.overlap(player, enemy1, collisionHandler, null, this);
+    game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
     
     if (leftKey.isDown) {
         player.moveLeft();
@@ -60,10 +46,11 @@ function update() {
     } else if (rightKey.isDown) {
         player.moveRight();
     }
+    else if (spaceBarKey.isDown) {
+        game.state.restart();
+    }
 }
 
 function collisionHandler() {
-    
-    
     game.stage.backgroundColor = '#992d2d';
 }
