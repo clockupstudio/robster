@@ -14,7 +14,7 @@ var player: Player;
 var leftKey;
 var rightKey;
 var spaceBarKey;
-var hitKey
+var hitKey: Phaser.Key;
 var died;
 var overlay_text;
 var fireDirection = 150;
@@ -64,6 +64,7 @@ function create() {
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     hitKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+    hitKey.onUp.add(player.idleAtk, player);
     
     died = false;
 
@@ -82,12 +83,6 @@ function update() {
         player.moveRight();
     } else if (spaceBarKey.isDown) {
          player.jumpUp();
-    } else if (hitKey.isDown) {
-        player.idleAtk();
-        
-        // if (fireArray.length > 10) {
-        //     fireArray.shift();
-        // }
     } else {
          player.idle();
     }
