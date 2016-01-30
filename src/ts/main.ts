@@ -121,6 +121,10 @@ function update() {
         fireBall = new Fireball(game, player.x, fireDirection);
         fireArray.push(fireBall);
         game.add.existing(fireBall);
+        
+        if (fireArray.length > 10) {
+            fireArray.shift();
+        }
     }
 }
 
