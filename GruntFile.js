@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-connect');
@@ -6,6 +7,9 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        
+        clean: ['js', 'src/**/**.js'],
+        
         typescript: {
             base: {
                 src: ['src/**/*.ts'],
@@ -27,7 +31,7 @@ module.exports = function(grunt) {
         connect: {
             server: {
                 options: {
-                    port: 8080,
+                    port: 8090,
                     base: './bin',
                     keepalive: true
                 }
@@ -48,6 +52,7 @@ module.exports = function(grunt) {
             }
         }
     });
-
-    grunt.registerTask('run', ['typescript', 'concat', 'copy', 'connect']);
+    
+    grunt.registerTask('build', ['clean', 'typescript', 'concat', 'copy']);
+    grunt.registerTask('run', ['build', 'connect']);
 };
