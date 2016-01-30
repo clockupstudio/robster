@@ -6,6 +6,7 @@ class Player extends Phaser.Sprite {
     stepMove:number = 2.5;
     isDisable:boolean = false;
     jumpping:boolean = false;
+    fireArray:Array<Phaser.Sprite>;
     
     constructor(game: Phaser.Game) {
         super(game, 160, 640, 'player');
@@ -23,6 +24,8 @@ class Player extends Phaser.Sprite {
         this.anchor.x = 0;
         this.anchor.y = 1;
         game.physics.enable(this, Phaser.Physics.ARCADE);
+        
+        this.fireArray = new Array();
     }
     
     idle() {
@@ -77,7 +80,15 @@ class Player extends Phaser.Sprite {
     }
     
     idleAtk() {
-        this.animations.play('idleAtk').onComplete.add(this.idle, this);;
+        this.animations.play('idleAtk').onComplete.add(this.idle, this);
+        
+        fireBall = new Fireball(game, player.x, fireDirection);
+        this.fireArray.push(fireBall);
+        this.game.add.existing(fireBall);
+        
+        // if (thifireArray.length > 10) {
+        //     fireArray.shift();
+        // }
     }
     
     disable() {

@@ -10,7 +10,6 @@ var ground;
 var game;
 var enemy;
 var fireBall;
-var fireArray:Array<Phaser.Sprite>;
 var player: Player;
 var leftKey;
 var rightKey;
@@ -54,9 +53,6 @@ function create() {
     ground.body.immovable = true;
     ground.body.allowGravity = false;
     
-    
-    fireArray = new Array();
-    
     player = new Player(game);
     game.add.existing(player);
     game.camera.follow(player);
@@ -89,13 +85,9 @@ function update() {
     } else if (hitKey.isDown) {
         player.idleAtk();
         
-        fireBall = new Fireball(game, player.x, fireDirection);
-        fireArray.push(fireBall);
-        game.add.existing(fireBall);
-        
-        if (fireArray.length > 10) {
-            fireArray.shift();
-        }
+        // if (fireArray.length > 10) {
+        //     fireArray.shift();
+        // }
     } else {
          player.idle();
     }
@@ -119,7 +111,7 @@ function update() {
         }
 
     if (!enemy.isDisable) {
-        fireArray.forEach(function(fireball) {
+        player.fireArray.forEach(function(fireball) {
             game.physics.arcade.overlap(fireball, enemy, collisionEnemy, null, this);
         });
     }
