@@ -6,8 +6,8 @@
 
 document.addEventListener('DOMContentLoaded', () => display());
 
-var ground;
-var game;
+var groundLayer;
+var game:Phaser.Game;
 var enemy;
 var fireBall;
 var player: Player;
@@ -18,6 +18,7 @@ var hitKey: Phaser.Key;
 var died;
 var overlay_text: Phaser.Text;
 var fireDirection = 150;
+
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -34,6 +35,7 @@ function preload() {
     game.load.spritesheet('fireball', 'assets/images/fireball_sprite.png', 64, 64, 6);
     game.load.spritesheet('ground', 'assets/images/ground_sprite.png', 135, 135, 1);
     game.load.image("background", "assets/images/background.gif");
+    game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
 }
 
 function create() {
@@ -46,12 +48,19 @@ function create() {
     background.fixedToCamera = true;
     background.scale.x = 0.65;
     background.scale.y = 0.65;
+    
+    this.map = game.add.tilemap('levelMap');
+    this.map.addTilesetImage('ground', 'ground');
+    groundLayer = this.map.createLayer('Ground');
+    groundLayer.resizeWorld();
+    this.map.createLayer('Background');
+    this.map.setCollisionBetween(1, 100, true, 'Ground');
 
-    ground = game.add.tileSprite(0, 640, 2560, 640, 'ground');
-    game.physics.enable(ground, Phaser.Physics.ARCADE);
-    ground.body.setSize(2560, 80, 0, 0);
-    ground.body.immovable = true;
-    ground.body.allowGravity = false;
+    // ground = game.add.tileSprite(0, 640, 2560, 640, 'ground');
+    // game.physics.enable(ground, Phaser.Physics.ARCADE);
+    // ground.body.setSize(2560, 80, 0, 0);
+    // ground.body.immovable = true;
+    // ground.body.allowGravity = false;
 
     player = new Player(game);
     player.onDead.add(onPlayerDead);
@@ -101,7 +110,7 @@ function update() {
         game.physics.arcade.overlap(player, enemy, collisionEat, null, this);
     }
 
-    game.physics.arcade.collide(player, ground, jumpDownComplete, null, this);
+    game.physics.arcade.collide(player, groundLayer);
 
     if (player.body.velocity.y == 10) {
         player.jumpDown();
@@ -139,11 +148,11 @@ function collisionEat() {
 }
 
 function render() {
-    // game.debug.body(player);
-    // if (enemy != null) {
-    //     game.debug.body(enemy);
-    // }
-    // game.debug.body(ground);
+    game.debug.body(player);
+    if (enemy != null) {
+        game.debug.body(enemy);
+    }
+    game.debug.body(groundLayer);
 }
 
 function onPlayerDead() {
