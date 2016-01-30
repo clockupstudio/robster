@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => display());
 
 var game;
 var enemy;
-var player;
+var player:Player;
 var leftKey;
 var rightKey;
 var spaceBarKey;
