@@ -26,7 +26,7 @@ class Bat extends Phaser.Sprite {
     
     fall() {
         this.fallTween = this.game.add.tween(this)
-        .to({x:this.x, y:560});
+        .to({x:this.x-120, y:575});
         this.fallTween.start();
     }
     
