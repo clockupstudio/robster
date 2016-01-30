@@ -82,10 +82,10 @@ function update() {
 function collisionEnemy() {
     enemy.disable();
     enemy.idle();
-    
-    enemy.body.collideWorldBounds = true;
-    enemy.body.bounce.y = 0;
-    enemy.body.gravity.y = 200;
+    enemy.fall();
+    // enemy.body.collideWorldBounds = true;
+    // enemy.body.bounce.y = 0;
+    // enemy.body.gravity.y = 200;
 }
 
 function collisionHandler() {
