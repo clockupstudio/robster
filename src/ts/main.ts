@@ -33,9 +33,13 @@ function preload() {
     game.load.spritesheet('bat', 'assets/images/bat-sprite.png', 80, 80, 3);
     game.load.spritesheet('fireball', 'assets/images/fireball_sprite.png', 64, 64, 6);
     game.load.spritesheet('ground', 'assets/images/Tile_2.png', 256, 256, 1);
+    game.load.image("background", "assets/images/vlAAe.gif");
 }
 
 function create() {
+    
+    var background = game.add.sprite(0, 0, 'background');
+    background.fixedToCamera = true;
     
     ground = game.add.tileSprite(0, 540, 2560, 540, 'ground');
     game.world.setBounds(0, 0, 2560, 0);
