@@ -71,7 +71,7 @@ function create() {
     died = false;
 
     var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-    overlay_text = this.game.add.text(0, 0, 'press [space] to restart', style);
+    overlay_text = this.game.add.text(0, 0, 'press [jump] to restart', style);
     overlay_text.setTextBounds(0, 100, 1280, 720);
     overlay_text.visible = died;
     overlay_text.fixedToCamera = true;
