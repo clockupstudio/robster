@@ -1,4 +1,5 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
+var game, enemy1;
 
 document.addEventListener('DOMContentLoaded', () => display());
 
@@ -25,12 +26,23 @@ function create() {
   
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+    initialEnemy1();
 }
 
 function initPlayer() {
     player = game.add.sprite(160, 640, 'player');
     player.anchor.x = 0;
     player.anchor.y = 1;
+    game.load.image('bat', 'assets/images/bat.png');
+}
+
+
+function initialEnemy1() {
+    enemy1 = game.add.sprite(1200, 480, 'bat');
+    enemy1.width = 80;
+    enemy1.height = 80;
+    game.physics.enable(enemy1, Phaser.Physics.ARCADE);
+    enemy1.body.acceleration.x = -100;   
 }
 
 function update() {
