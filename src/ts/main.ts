@@ -27,7 +27,7 @@ function display() {
 
 function preload() {
     game.load.spritesheet('player', 'assets/images/player.png', 160, 160, 16);
-    game.load.spritesheet('bat', 'assets/images/bat-sprite.png', 80, 80, 2);
+    game.load.spritesheet('bat', 'assets/images/bat-sprite.png', 80, 80, 3);
     game.load.spritesheet('fireball', 'assets/images/fireball_sprite.png', 64, 64, 6);
 }
 
@@ -66,6 +66,10 @@ function update() {
             player.idle();
         }
     }
+    
+    if (!enemy.isDisable) {
+        game.physics.arcade.overlap(fireBall, enemy, collisionEnemy, null, this);
+    }
 
     if (spaceBarKey.isDown) {
         game.state.restart();
@@ -75,6 +79,11 @@ function update() {
         fireBall = new Fireball(game, player.x);
         game.add.existing(fireBall);
     }
+}
+
+function collisionEnemy() {
+    enemy.disable();
+    enemy.idle();
 }
 
 function collisionHandler() {
