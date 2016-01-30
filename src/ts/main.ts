@@ -17,6 +17,7 @@ var spaceBarKey;
 var hitKey
 var died;
 var overlay_text;
+var fireDirection = 150;
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -77,8 +78,10 @@ function update() {
     }
 
     if (leftKey.isDown) {
+        fireDirection = -150;
         player.moveLeft();
     } else if (rightKey.isDown) {
+        fireDirection = 150;
         player.moveRight();
     } else {
         player.idle();
@@ -93,7 +96,7 @@ function update() {
     }
 
     if (hitKey.isDown) {
-        fireBall = new Fireball(game, player.x);
+        fireBall = new Fireball(game, player.x, fireDirection);
         game.add.existing(fireBall);
     }
 }
