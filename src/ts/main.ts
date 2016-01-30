@@ -21,7 +21,7 @@ function display() {
 
 function preload() {
     game.load.spritesheet('player', 'assets/images/player.png', 80, 160);
-    game.load.image('bat', 'assets/images/bat.png', 80, 80);
+    game.load.spritesheet('bat', 'assets/images/bat-sprite.png', 80, 80,2);
 }
 
 function create() {

@@ -7,6 +7,9 @@ class Bat extends Phaser.Sprite {
         this.width = 80;
         this.height = 80;
         game.physics.enable(this, Phaser.Physics.ARCADE);
+        
+        var walk = this.animations.add('fly');
+        this.animations.play('fly', 3, true);
     }
     
     fly() {
