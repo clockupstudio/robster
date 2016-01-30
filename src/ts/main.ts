@@ -54,6 +54,7 @@ function create() {
     ground.body.allowGravity = false;
     
     player = new Player(game);
+    player.onDead.add(onPlayerDead);
     game.add.existing(player);
     game.camera.follow(player);
 
@@ -147,4 +148,8 @@ function render() {
         game.debug.body(enemy);
     }
     game.debug.body(ground);
+}
+
+function onPlayerDead(){
+    overlay_text.visible = true;
 }

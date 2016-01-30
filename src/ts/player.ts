@@ -9,6 +9,7 @@ class Player extends Phaser.Sprite {
     isFiring:boolean = false;
     isDead:boolean = false;
     fireArray:Array<Phaser.Sprite>;
+    onDead:Phaser.Signal;
     
     constructor(game: Phaser.Game) {
         super(game, 160, 640, 'player');
@@ -28,6 +29,8 @@ class Player extends Phaser.Sprite {
         game.physics.enable(this, Phaser.Physics.ARCADE);
         
         this.fireArray = new Array();
+        
+        this.onDead = new Phaser.Signal();
     }
     
     idle() {
@@ -139,5 +142,6 @@ class Player extends Phaser.Sprite {
     dead() {
         this.isDead = true;
         this.animations.play('die').onComplete.add(this.disable, this);
+        this.onDead.dispatch();
     }
 }
