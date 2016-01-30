@@ -1,3 +1,5 @@
+/// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
+
 class Player extends Phaser.Sprite {
     
     stepMove:number = 2.5;

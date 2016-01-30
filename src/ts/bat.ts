@@ -1,3 +1,5 @@
+/// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
+
 class Bat extends Phaser.Sprite {
    
     constructor(game: Phaser.Game) {
