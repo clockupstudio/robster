@@ -139,11 +139,11 @@ function collisionEat() {
 }
 
 function render() {
-    game.debug.body(player);
-    if (enemy != null) {
-        game.debug.body(enemy);
-    }
-    game.debug.body(ground);
+    // game.debug.body(player);
+    // if (enemy != null) {
+    //     game.debug.body(enemy);
+    // }
+    // game.debug.body(ground);
 }
 
 function onPlayerDead() {
