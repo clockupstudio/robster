@@ -22,9 +22,10 @@ function preload() {
     game.load.image('bat', 'assets/images/bat.png', 80, 80);
 }
 
+
 function create() {
     initPlayer();
-    initialEnemy1();
+    game.time.events.loop(Phaser.Timer.SECOND * 3, moveBaddie, this);
   
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -37,13 +38,17 @@ function initPlayer() {
     game.physics.enable(player, Phaser.Physics.ARCADE);
 }
 
-
-function initialEnemy1() {
-    enemy1 = game.add.sprite(1280, 520, 'bat');
-    enemy1.width = 80;
-    enemy1.height = 80;
-
-    var demoTween = game.add.tween(enemy1)
+function moveBaddie() {
+    var luck = game.rnd.integerInRange(1, 3);
+    if (luck != game.rnd.integerInRange(1, 3)) {
+        return;
+    }
+    
+    var e = game.add.sprite(1280, 520, 'bat');
+    e.width = 80;
+    e.height = 80;
+    
+    var demoTween = game.add.tween(e)
     .to({x:1120,y:400})
     .to({x:960,y:520})
     .to({x:800,y:400})
@@ -53,7 +58,7 @@ function initialEnemy1() {
     .to({x:160,y:400})
     .to({x:-80,y:520});
     demoTween.start();    
-}
+};
 
 function update() {
     game.physics.arcade.overlap(player, enemy1, collisionHandler, null, this);
