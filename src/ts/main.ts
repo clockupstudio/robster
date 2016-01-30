@@ -25,6 +25,7 @@ function preload() {
 }
 
 function create() {
+    game.stage.backgroundColor = '#000000';
     player = new Player(game);
     game.add.existing(player);
     
@@ -48,7 +49,6 @@ function update() {
     }
     else if (spaceBarKey.isDown) {
         game.state.restart();
-        game.stage.backgroundColor = '#000000';
     }
 }
 
