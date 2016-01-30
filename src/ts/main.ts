@@ -56,12 +56,6 @@ function create() {
     this.map.createLayer('Background');
     this.map.setCollisionBetween(1, 100, true, 'Ground');
 
-    // ground = game.add.tileSprite(0, 640, 2560, 640, 'ground');
-    // game.physics.enable(ground, Phaser.Physics.ARCADE);
-    // ground.body.setSize(2560, 80, 0, 0);
-    // ground.body.immovable = true;
-    // ground.body.allowGravity = false;
-
     player = new Player(game);
     player.onDead.add(onPlayerDead);
     game.add.existing(player);
@@ -148,11 +142,11 @@ function collisionEat() {
 }
 
 function render() {
-    game.debug.body(player);
-    if (enemy != null) {
-        game.debug.body(enemy);
-    }
-    game.debug.body(groundLayer);
+    // game.debug.body(player);
+    // if (enemy != null) {
+    //     game.debug.body(enemy);
+    // }
+    // game.debug.body(groundLayer);
 }
 
 function onPlayerDead() {
