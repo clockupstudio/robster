@@ -48,6 +48,7 @@ function update() {
     }
     else if (spaceBarKey.isDown) {
         game.state.restart();
+        game.stage.backgroundColor = '#000000';
     }
 }
 
