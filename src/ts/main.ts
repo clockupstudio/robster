@@ -35,11 +35,16 @@ function preload() {
 
 function create() {
     
-    ground = game.add.tileSprite(0, 540, 1280, 540, 'ground');
+    ground = game.add.tileSprite(0, 540, 2560, 540, 'ground');
+    game.world.setBounds(0, 0, 2560, 0);
     
     game.stage.backgroundColor = '#000000';
     player = new Player(game);
     game.add.existing(player);
+    
+    game.camera.follow(player);
+    
+    game.camera.follow(player);
 
     enemy = new Bat(game);
     game.add.existing(enemy);
