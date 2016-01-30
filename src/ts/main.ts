@@ -10,6 +10,7 @@ var ground;
 var game;
 var enemy;
 var fireBall;
+var fireArray:Array<Phaser.Sprite>;
 var player: Player;
 var leftKey;
 var rightKey;
@@ -37,6 +38,7 @@ function preload() {
 }
 
 function create() {
+    fireArray = new Array();
     
     var background = game.add.sprite(0, 0, 'background');
     background.fixedToCamera = true;
@@ -94,7 +96,9 @@ function update() {
     }
     
     if (!enemy.isDisable) {
-        game.physics.arcade.overlap(fireBall, enemy, collisionEnemy, null, this);
+        fireArray.forEach(function(fireball) {
+            game.physics.arcade.overlap(fireball, enemy, collisionEnemy, null, this);
+        });
     }
 
     if (spaceBarKey.isDown) {
@@ -103,6 +107,7 @@ function update() {
 
     if (hitKey.isDown) {
         fireBall = new Fireball(game, player.x, fireDirection);
+        fireArray.push(fireBall);
         game.add.existing(fireBall);
     }
 }
