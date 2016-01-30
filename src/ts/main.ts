@@ -32,7 +32,7 @@ function preload() {
     game.load.spritesheet('player', 'assets/images/player.png', 160, 160, 16);
     game.load.spritesheet('bat', 'assets/images/bat-sprite.png', 80, 80, 3);
     game.load.spritesheet('fireball', 'assets/images/fireball_sprite.png', 64, 64, 6);
-    game.load.spritesheet('ground', 'assets/images/Tile_2.png', 256, 256, 1);
+    game.load.spritesheet('ground', 'assets/images/wasteland-tile.png', 135, 135, 1);
     game.load.image("background", "assets/images/vlAAe.gif");
 }
 
@@ -41,7 +41,7 @@ function create() {
     var background = game.add.sprite(0, 0, 'background');
     background.fixedToCamera = true;
     
-    ground = game.add.tileSprite(0, 540, 2560, 540, 'ground');
+    ground = game.add.tileSprite(0, 640, 2560, 640, 'ground');
     game.world.setBounds(0, 0, 2560, 0);
     
     game.stage.backgroundColor = '#000000';
