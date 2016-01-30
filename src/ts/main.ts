@@ -1,9 +1,10 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
-var game, enemy1;
+/// <reference path="./player.ts" />
 
 document.addEventListener('DOMContentLoaded', () => display());
 
 var game;
+var enemy1;
 var player;
 var leftKey;
 var rightKey;
@@ -23,25 +24,20 @@ function preload() {
 }
 
 function create() {
-    initPlayer();
+    player = new Player(game);
+    game.add.existing(player);
+    
     initialEnemy1();
   
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 }
 
-function initPlayer() {
-    player = game.add.sprite(160, 640, 'player');
-    player.anchor.x = 0;
-    player.anchor.y = 1;
-    game.physics.enable(player, Phaser.Physics.ARCADE);
-}
-
-
 function initialEnemy1() {
     enemy1 = game.add.sprite(1280, 520, 'bat');
     enemy1.width = 80;
     enemy1.height = 80;
+    game.physics.enable(enemy1, Phaser.Physics.ARCADE);
 
     var demoTween = game.add.tween(enemy1)
     .to({x:1120,y:400})
@@ -58,21 +54,16 @@ function initialEnemy1() {
 function update() {
     game.physics.arcade.overlap(player, enemy1, collisionHandler, null, this);
     
-    if (leftKey.isDown)
-    {
-        player.anchor.x = 1;
-        player.scale.x = -1;
-        player.x = player.x - stepMove ;
-        
-    }
-    else if (rightKey.isDown)
-    {
-        player.anchor.x = 0;
-        player.scale.x = 1;
-        player.x = player.x + stepMove;
+    if (leftKey.isDown) {
+        player.moveLeft();
+       
+    } else if (rightKey.isDown) {
+        player.moveRight();
     }
 }
 
 function collisionHandler() {
+    
+    
     game.stage.backgroundColor = '#992d2d';
 }
