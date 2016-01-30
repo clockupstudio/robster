@@ -63,6 +63,7 @@ function create() {
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceBarKey.onUp.add(player.jumpUp, player);
     hitKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
     hitKey.onUp.add(player.idleAtk, player);
     
@@ -81,9 +82,8 @@ function update() {
     } else if (rightKey.isDown) {
         fireDirection = 150;
         player.moveRight();
-    } else if (spaceBarKey.isDown) {
-         player.jumpUp();
-    } else {
+    } 
+    else {
          player.idle();
     }
     
