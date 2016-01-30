@@ -26,8 +26,10 @@ class Player extends Phaser.Sprite {
             return;
         }
         
-        this.anchor.x = 1;
+        this.anchor.setTo(0.5,1);
         this.scale.x = -1;
+        
+        
         this.x = this.x - this.stepMove ;
         this.animations.play('run');
     }

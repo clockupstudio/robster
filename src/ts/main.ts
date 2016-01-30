@@ -23,6 +23,7 @@ function display() {
         preload: preload,
         create: create,
         update: update,
+        render: render
     });
 }
 
@@ -116,4 +117,10 @@ function collisionHandler() {
 
 function collisionEat() {
     enemy.visible = false;
+}
+
+function render() {
+
+    // game.debug.body(player);
+
 }
