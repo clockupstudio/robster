@@ -90,13 +90,11 @@ function collisionEnemy() {
 
 function collisionHandler() {
     game.stage.backgroundColor = '#992d2d';
-    //player.disable();
-
-    died = true;
-    overlay_text.visible = true;
-
     
-    // game.time.events.add(500, ()=> {
-    //     player.enable();
-    // });
+    player.gotHit();
+    
+    game.time.events.add(500, ()=> {
+        died = true;
+        overlay_text.visible = true;
+    });
 }
