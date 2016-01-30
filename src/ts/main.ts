@@ -39,32 +39,30 @@ function create() {
     enemy = new Bat(game);
     game.add.existing(enemy);
     enemy.fly();
-    
+
 
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     hitKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
     died = false;
-    
+
     var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-    overlay_text = this.game.add.text( 0, 0, 'press [space] to restart',style);
+    overlay_text = this.game.add.text(0, 0, 'press [space] to restart', style);
     overlay_text.setTextBounds(0, 100, 1280, 720);
     overlay_text.visible = died;
 }
 
 function update() {
-    if (!player.isDisable) {
-        console.log('in')
-        game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
+    game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
 
-        if (leftKey.isDown) {
-            player.moveLeft();
-        } else if (rightKey.isDown) {
-            player.moveRight();
-        } else {
-            player.idle();
-        }
+
+    if (leftKey.isDown) {
+        player.moveLeft();
+    } else if (rightKey.isDown) {
+        player.moveRight();
+    } else {
+        player.idle();
     }
     
     if (!enemy.isDisable) {
@@ -74,7 +72,7 @@ function update() {
     if (spaceBarKey.isDown) {
         game.state.restart();
     }
-    
+
     if (hitKey.isDown) {
         fireBall = new Fireball(game, player.x);
         game.add.existing(fireBall);
@@ -92,7 +90,13 @@ function collisionEnemy() {
 
 function collisionHandler() {
     game.stage.backgroundColor = '#992d2d';
-    player.disable();
+    //player.disable();
+
     died = true;
     overlay_text.visible = true;
+
+    
+    // game.time.events.add(500, ()=> {
+    //     player.enable();
+    // });
 }

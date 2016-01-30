@@ -1,4 +1,5 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
+/// <reference path="./sequential_frame_order_generater.ts" />
 
 class Player extends Phaser.Sprite {
     
