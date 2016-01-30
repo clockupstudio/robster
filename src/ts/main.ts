@@ -40,19 +40,19 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 600;
     game.world.setBounds(0, 0, 2560, 0);
- 
- 
+
+
     var background = game.add.sprite(0, 0, 'background');
     background.fixedToCamera = true;
     background.scale.x = 0.65;
     background.scale.y = 0.65;
-    
+
     ground = game.add.tileSprite(0, 640, 2560, 640, 'ground');
     game.physics.enable(ground, Phaser.Physics.ARCADE);
     ground.body.setSize(2560, 80, 0, 0);
     ground.body.immovable = true;
     ground.body.allowGravity = false;
-    
+
     player = new Player(game);
     player.onDead.add(onPlayerDead);
     game.add.existing(player);
@@ -60,14 +60,14 @@ function create() {
 
     enemy = new Bat(game);
     game.add.existing(enemy);
-    
+
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceBarKey.onUp.add(player.jumpUp, player);
     hitKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
     hitKey.onUp.add(player.idleAtk, player);
-    
+
     died = false;
 
     var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
@@ -84,28 +84,28 @@ function update() {
     } else if (rightKey.isDown) {
         fireDirection = 150;
         player.moveRight();
-    } 
-    else {
-         player.idle();
     }
-    
+    else {
+        player.idle();
+    }
+
     if (player.x == 450) {
         enemy.fly(1280);
     }
-    
+
     if (!enemy.isDisable) {
         game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
     }
-    
+
     if (enemy.isDisable) {
         game.physics.arcade.overlap(player, enemy, collisionEat, null, this);
     }
-    
+
     game.physics.arcade.collide(player, ground, jumpDownComplete, null, this);
-    
+
     if (player.body.velocity.y == 10) {
-            player.jumpDown();
-        }
+        player.jumpDown();
+    }
 
     if (!enemy.isDisable) {
         player.fireArray.forEach(function(fireball) {
@@ -115,7 +115,7 @@ function update() {
 
     if (spaceBarKey.isDown && player.isDead) {
         game.state.restart();
-    } 
+    }
 }
 
 function jumpDownComplete() {
@@ -140,12 +140,12 @@ function collisionEat() {
 
 function render() {
     game.debug.body(player);
-    if(enemy != null) {
+    if (enemy != null) {
         game.debug.body(enemy);
     }
     game.debug.body(ground);
 }
 
-function onPlayerDead(){
+function onPlayerDead() {
     overlay_text.visible = true;
 }
