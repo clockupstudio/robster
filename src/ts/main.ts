@@ -36,22 +36,25 @@ function preload() {
 }
 
 function create() {
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.arcade.gravity.y = 600;
+    game.world.setBounds(0, 0, 2560, 0);
     
     ground = game.add.tileSprite(0, 540, 2560, 540, 'ground');
-    game.world.setBounds(0, 0, 2560, 0);
+    game.physics.enable(ground, Phaser.Physics.ARCADE);
+    ground.body.setSize(2560, 80, 0, 120);
+    ground.body.immovable = true;
+    ground.body.allowGravity = false;
     
     game.stage.backgroundColor = '#000000';
     player = new Player(game);
     game.add.existing(player);
     
     game.camera.follow(player);
-    
-    game.camera.follow(player);
 
     enemy = new Bat(game);
     game.add.existing(enemy);
     
-
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -76,6 +79,8 @@ function update() {
     if (enemy.isDisable) {
         game.physics.arcade.overlap(player, enemy, collisionEat, null, this);
     }
+    
+    game.physics.arcade.collide(player, ground, jumpDownComplete, null, this);
 
     if (leftKey.isDown) {
         fireDirection = -150;
@@ -83,15 +88,21 @@ function update() {
     } else if (rightKey.isDown) {
         fireDirection = 150;
         player.moveRight();
+    } else if (spaceBarKey.isDown) {
+         player.jumpUp();
     } else {
-        player.idle();
+         player.idle();
     }
     
+    if (player.body.velocity.y == 10) {
+            player.jumpDown();
+        }
+
     if (!enemy.isDisable) {
         game.physics.arcade.overlap(fireBall, enemy, collisionEnemy, null, this);
     }
 
-    if (spaceBarKey.isDown) {
+    if (spaceBarKey.isDown && died) {
         game.state.restart();
     }
 
@@ -99,6 +110,11 @@ function update() {
         fireBall = new Fireball(game, player.x, fireDirection);
         game.add.existing(fireBall);
     }
+}
+
+function jumpDownComplete() {
+    player.body.allowGravity = false;
+    player.idle();
 }
 
 function collisionEnemy() {
@@ -124,6 +140,6 @@ function collisionEat() {
 
 function render() {
 
-    // game.debug.body(player);
-
+    game.debug.body(player);
+    game.debug.body(ground);
 }

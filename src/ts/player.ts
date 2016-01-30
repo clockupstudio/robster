@@ -5,11 +5,14 @@ class Player extends Phaser.Sprite {
     
     stepMove:number = 2.5;
     isDisable:boolean = false;
+    jumpping:boolean = false;
     
     constructor(game: Phaser.Game) {
         super(game, 160, 640, 'player');
         
         this.animations.add('idle', new SequentialFrameOrderGenerater().generate(0, 0), 1);
+        this.animations.add('jumpUp', new SequentialFrameOrderGenerater().generate(0, 4), 5);
+        this.animations.add('jumpDown', new SequentialFrameOrderGenerater().generate(5, 3), 3);
         this.animations.add('run', new SequentialFrameOrderGenerater().generate(8, 7), 16);
         
         this.anchor.x = 0;
@@ -18,6 +21,25 @@ class Player extends Phaser.Sprite {
     }
     
     idle() {
+        if (this.jumpping) {
+            return;
+        }
+        this.animations.play('idle');
+    }
+    
+    jumpUp() {
+        this.jumpping = true;
+        this.body.allowGravity = true;
+        this.body.velocity.y = -450;
+        this.animations.play('jumpUp');
+    }
+    
+    jumpDown() {
+        this.animations.play('jumpDown').onComplete.add(this.onJumpComplete, this);
+    }
+    
+    onJumpComplete() {
+        this.jumpping = false;
         this.animations.play('idle');
     }
     
