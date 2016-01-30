@@ -48,8 +48,7 @@ function create() {
 
     enemy = new Bat(game);
     game.add.existing(enemy);
-    enemy.fly();
-
+    
 
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -64,6 +63,10 @@ function create() {
 }
 
 function update() {
+    if (player.x === 450) {
+        enemy.fly();
+    }
+    
     if (!enemy.isDisable) {
         game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
     }
