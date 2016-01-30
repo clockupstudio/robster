@@ -46,6 +46,10 @@ class Player extends Phaser.Sprite {
         
         
         this.x = this.x - this.stepMove ;
+        
+        if(this.jumpping){
+            return;
+        }
         this.animations.play('run');
     }
     
@@ -57,6 +61,10 @@ class Player extends Phaser.Sprite {
         this.anchor.x = 0;
         this.scale.x = 1;
         this.x = this.x + this.stepMove;
+        
+        if(this.jumpping){
+            return;
+        }
         this.animations.play('run');
     }
     
