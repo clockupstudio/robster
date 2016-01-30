@@ -17,5 +17,6 @@ class Fireball extends Phaser.Sprite {
         var walk = this.animations.add('fire');
         this.animations.play('fire', 12, true);
         this.body.velocity.x=direction;
+        this.body.allowGravity = false;
     }
 }
