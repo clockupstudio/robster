@@ -2,7 +2,7 @@
 /// <reference path="./sequential_frame_order_generater.ts" />
 
 class Bat extends Phaser.Sprite {
-    
+    demoTween:Phaser.Tween;
     isDisable:boolean = false;
    
     constructor(game: Phaser.Game) {
@@ -20,19 +20,22 @@ class Bat extends Phaser.Sprite {
     
     idle() {
         this.animations.play('idle');
+        this.demoTween.pause();
     }
     
     fly() {
-        var demoTween = this.game.add.tween(this)
-        .to({x:1120, y:400})
-        .to({x:960, y:520})
-        .to({x:800, y:400})
-        .to({x:640, y:520})
-        .to({x:480, y:400})
-        .to({x:320, y:520})
-        .to({x:160, y:400})
-        .to({x:-80, y:520});
-        demoTween.start();    
+        var x = 1120;
+        var y = 400;
+        this.demoTween = this.game.add.tween(this)
+        .to({x:x, y:y})
+        .to({x:x-160, y:y+120})
+        .to({x:x-320, y:y})
+        .to({x:x-480, y:y+120})
+        .to({x:x-640, y:y})
+        .to({x:x-800, y:y+120})
+        .to({x:x-960, y:y})
+        .to({x:x-1120, y:y+120});
+        this.demoTween.start();    
     }
     
     disable() {
