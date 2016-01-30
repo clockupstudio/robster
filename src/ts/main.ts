@@ -41,8 +41,30 @@ function initialEnemy1() {
     enemy1 = game.add.sprite(1200, 480, 'bat');
     enemy1.width = 80;
     enemy1.height = 80;
-    game.physics.enable(enemy1, Phaser.Physics.ARCADE);
-    enemy1.body.acceleration.x = -100;   
+    // game.physics.enable(enemy1, Phaser.Physics.ARCADE);
+    // enemy1.body.acceleration.x = -100;
+    
+    var demoTween = game.add.tween(enemy1).to({x:1120,y:400},1000)
+    .to({x:1040,y:480})
+    .to({x:960,y:400})
+    .to({x:880,y:480})
+    .to({x:800,y:400})
+    .to({x:720,y:480})
+    .to({x:640,y:400})
+    .to({x:560,y:480})
+    .to({x:480,y:400})
+    .to({x:400,y:480})
+    .to({x:320,y:400})
+    .to({x:240,y:480})
+    .to({x:160,y:400})
+    .to({x:80,y:480})
+    .to({x:0,y:400});
+    // demoTween.onComplete.add(function(){
+    //     enemy1.x = 100;
+    //     enemy1.y = 100;
+    //     demoTween.start();
+    // });
+    demoTween.start();    
 }
 
 function update() {
