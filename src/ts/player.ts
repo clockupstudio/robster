@@ -22,6 +22,10 @@ class Player extends Phaser.Sprite {
     }
     
     moveLeft() {
+        if(this.isDisable){
+            return;
+        }
+        
         this.anchor.x = 1;
         this.scale.x = -1;
         this.x = this.x - this.stepMove ;
@@ -29,6 +33,10 @@ class Player extends Phaser.Sprite {
     }
     
     moveRight() {
+        if(this.isDisable){
+            return;
+        }
+        
         this.anchor.x = 0;
         this.scale.x = 1;
         this.x = this.x + this.stepMove;
@@ -44,11 +52,18 @@ class Player extends Phaser.Sprite {
     }
 
     gotHit() {
+        this.animations.play('idle');
+        
         this.disable();
         
         game.time.events.add(500, () => {
             this.dead();
         }, this);
+        
+        var striking:Phaser.Tween = this.game.add.tween(this);
+        
+        striking.to({x:-1});
+        striking.start();
     }
     
     dead() {
