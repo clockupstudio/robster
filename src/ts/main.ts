@@ -7,16 +7,18 @@ document.addEventListener('DOMContentLoaded', () => display());
 
 var game;
 var enemy;
-var player;
+var player: Player;
 var leftKey;
 var rightKey;
 var spaceBarKey;
+var died;
+var overlay_text;
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
-    preload: preload,
-    create: create,
-    update: update,
+        preload: preload,
+        create: create,
+        update: update,
     });
 }
 
@@ -26,9 +28,10 @@ function preload() {
 }
 
 function create() {
+    game.stage.backgroundColor = '#000000';
     player = new Player(game);
     game.add.existing(player);
-    
+
     enemy = new Bat(game);
     game.add.existing(enemy);
     enemy.fly();
@@ -36,23 +39,36 @@ function create() {
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    died = false;
+    
+    var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+    overlay_text = this.game.add.text( 0, 0, 'press [space] to restart',style);
+    overlay_text.setTextBounds(0, 100, 1280, 720);
+    overlay_text.visible = died;
 }
 
 function update() {
-    game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
-    
-    if (leftKey.isDown) {
-        player.moveLeft();
-    } else if (rightKey.isDown) {
-        player.moveRight();
-    } else if (spaceBarKey.isDown) {
+    if (!player.isDisable) {
+        console.log('in')
+        game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
+
+        if (leftKey.isDown) {
+            player.moveLeft();
+        } else if (rightKey.isDown) {
+            player.moveRight();
+        } else {
+            player.idle();
+        }
+    }
+
+    if (spaceBarKey.isDown) {
         game.state.restart();
-        game.stage.backgroundColor = '#000000';
-    } else {
-        player.idle();
     }
 }
 
 function collisionHandler() {
     game.stage.backgroundColor = '#992d2d';
+    player.disable();
+    died = true;
+    overlay_text.visible = true;
 }

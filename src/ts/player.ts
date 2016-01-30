@@ -3,6 +3,7 @@
 class Player extends Phaser.Sprite {
     
     stepMove:number = 2.5;
+    isDisable:boolean = false;
     
     constructor(game: Phaser.Game) {
         super(game, 160, 640, 'player');
@@ -32,4 +33,9 @@ class Player extends Phaser.Sprite {
         this.x = this.x + this.stepMove;
         this.animations.play('run');
     }
+    
+    disable() {
+        this.isDisable = true;
+    }
+    
 }
