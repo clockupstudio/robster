@@ -89,7 +89,8 @@ class Player extends Phaser.Sprite {
         
         this.animations.play('idleAtk').onComplete.add(this.idle, this);
         
-        fireBall = new Fireball(game, player.x, fireDirection);
+        fireBall = new Fireball(game, player.x, (player.y - 130), fireDirection);
+        
         this.fireArray.push(fireBall);
         this.game.add.existing(fireBall);
         
@@ -97,9 +98,7 @@ class Player extends Phaser.Sprite {
             this.isFiring = false;
         }, this);
         
-        // if (thifireArray.length > 10) {
-        //     fireArray.shift();
-        // }
+        fireBall.launch();
     }
     
     disable() {
