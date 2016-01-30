@@ -7,6 +7,7 @@ var game;
 var player;
 var leftKey;
 var rightKey;
+var spaceBarKey;
 var stepMove = 2.5;
 
 function display() {
@@ -29,6 +30,7 @@ function create() {
   
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+    spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 }
 
 function initPlayer() {
@@ -75,6 +77,9 @@ function update() {
         player.anchor.x = 0;
         player.scale.x = 1;
         player.x = player.x + stepMove;
+    }
+    else if (spaceBarKey.isDown) {
+        game.state.restart();
     }
 }
 
