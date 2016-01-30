@@ -6,6 +6,7 @@
 
 document.addEventListener('DOMContentLoaded', () => display());
 
+var ground;
 var game;
 var enemy;
 var fireBall;
@@ -29,9 +30,13 @@ function preload() {
     game.load.spritesheet('player', 'assets/images/player.png', 160, 160, 16);
     game.load.spritesheet('bat', 'assets/images/bat-sprite.png', 80, 80, 3);
     game.load.spritesheet('fireball', 'assets/images/fireball_sprite.png', 64, 64, 6);
+    game.load.spritesheet('ground', 'assets/images/Tile_2.png', 256, 256, 1);
 }
 
 function create() {
+    
+    ground = game.add.tileSprite(0, 540, 1280, 540, 'ground');
+    
     game.stage.backgroundColor = '#000000';
     player = new Player(game);
     game.add.existing(player);
