@@ -13,7 +13,7 @@ class Bat extends Phaser.Sprite {
     }
     
     fly() {
-        var demoTween = game.add.tween(this)
+        var demoTween = this.game.add.tween(this)
         .to({x:1120, y:400})
         .to({x:960, y:520})
         .to({x:800, y:400})
