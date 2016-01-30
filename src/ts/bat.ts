@@ -5,6 +5,7 @@ class Bat extends Phaser.Sprite {
     flyingTween:Phaser.Tween;
     fallTween:Phaser.Tween;
     isDisable:boolean = false;
+    flying:boolean = false;
    
     constructor(game: Phaser.Game) {
         super(game, 1280, 520, 'bat');
@@ -30,19 +31,21 @@ class Bat extends Phaser.Sprite {
         this.fallTween.start();
     }
     
-    fly() {
-        var x = 1120;
-        var y = 400;
-        this.flyingTween = this.game.add.tween(this)
-        .to({x:x, y:y})
-        .to({x:x-160, y:y+120})
-        .to({x:x-320, y:y})
-        .to({x:x-480, y:y+120})
-        .to({x:x-640, y:y})
-        .to({x:x-800, y:y+120})
-        .to({x:x-960, y:y})
-        .to({x:x-1120, y:y+120});
-        this.flyingTween.start();    
+    fly(x:number) {
+        if (!this.flying) {
+            var y = 400;
+            this.flyingTween = this.game.add.tween(this)
+            .to({x:x, y:y})
+            .to({x:x-160, y:y+120})
+            .to({x:x-320, y:y})
+            .to({x:x-480, y:y+120})
+            .to({x:x-640, y:y})
+            .to({x:x-800, y:y+120})
+            .to({x:x-960, y:y})
+            .to({x:x-1120, y:y+120});
+            this.flyingTween.start();
+            this.flying = true;    
+        }
     }
     
     disable() {

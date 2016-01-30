@@ -65,7 +65,7 @@ function create() {
 
 function update() {
     if (player.x === 450) {
-        enemy.fly();
+        enemy.fly(1280);
     }
     
     if (!enemy.isDisable) {
