@@ -33,7 +33,7 @@ class Bat extends Phaser.Sprite {
     
     fly(x:number) {
         if (!this.flying) {
-            var y = 400;
+            var y = 300;
             this.flyingTween = this.game.add.tween(this)
             .to({x:x, y:y})
             .to({x:x-160, y:y+120})

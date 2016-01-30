@@ -30,11 +30,11 @@ function display() {
 }
 
 function preload() {
-    game.load.spritesheet('player', 'assets/images/player.png', 160, 160, 16);
-    game.load.spritesheet('bat', 'assets/images/bat-sprite.png', 80, 80, 3);
+    game.load.spritesheet('player', 'assets/images/player_sprite.png', 160, 160, 40);
+    game.load.spritesheet('bat', 'assets/images/bat_sprite.png', 80, 80, 3);
     game.load.spritesheet('fireball', 'assets/images/fireball_sprite.png', 64, 64, 6);
-    game.load.spritesheet('ground', 'assets/images/wasteland-tile.png', 135, 135, 1);
-    game.load.image("background", "assets/images/vlAAe.gif");
+    game.load.spritesheet('ground', 'assets/images/ground_sprite.png', 135, 135, 1);
+    game.load.image("background", "assets/images/background.gif");
 }
 
 function create() {
@@ -42,8 +42,7 @@ function create() {
     game.physics.arcade.gravity.y = 600;
     game.world.setBounds(0, 0, 2560, 0);
  
-    fireArray = new Array();
-    
+ 
     var background = game.add.sprite(0, 0, 'background');
     background.fixedToCamera = true;
     background.scale.x = 0.65;
@@ -55,7 +54,8 @@ function create() {
     ground.body.immovable = true;
     ground.body.allowGravity = false;
     
-    game.stage.backgroundColor = '#000000';
+    
+    fireArray = new Array();
     
     player = new Player(game);
     game.add.existing(player);
@@ -68,6 +68,7 @@ function create() {
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     hitKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+    
     died = false;
 
     var style = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
@@ -77,6 +78,28 @@ function create() {
 }
 
 function update() {
+    if (leftKey.isDown) {
+        fireDirection = -150;
+        player.moveLeft();
+    } else if (rightKey.isDown) {
+        fireDirection = 150;
+        player.moveRight();
+    } else if (spaceBarKey.isDown) {
+         player.jumpUp();
+    } else if (hitKey.isDown) {
+        player.idleAtk();
+        
+        fireBall = new Fireball(game, player.x, fireDirection);
+        fireArray.push(fireBall);
+        game.add.existing(fireBall);
+        
+        if (fireArray.length > 10) {
+            fireArray.shift();
+        }
+    } else {
+         player.idle();
+    }
+    
     if (player.x == 450) {
         enemy.fly(1280);
     }
@@ -90,18 +113,6 @@ function update() {
     }
     
     game.physics.arcade.collide(player, ground, jumpDownComplete, null, this);
-
-    if (leftKey.isDown) {
-        fireDirection = -150;
-        player.moveLeft();
-    } else if (rightKey.isDown) {
-        fireDirection = 150;
-        player.moveRight();
-    } else if (spaceBarKey.isDown) {
-         player.jumpUp();
-    } else {
-         player.idle();
-    }
     
     if (player.body.velocity.y == 10) {
             player.jumpDown();
@@ -115,17 +126,7 @@ function update() {
 
     if (spaceBarKey.isDown && died) {
         game.state.restart();
-    }
-
-    if (hitKey.isDown) {
-        fireBall = new Fireball(game, player.x, fireDirection);
-        fireArray.push(fireBall);
-        game.add.existing(fireBall);
-        
-        if (fireArray.length > 10) {
-            fireArray.shift();
-        }
-    }
+    } 
 }
 
 function jumpDownComplete() {
@@ -141,14 +142,12 @@ function collisionEnemy(fireball) {
 }
 
 function collisionHandler() {
-    game.stage.backgroundColor = '#992d2d';
-    
     player.gotHit();
     
-    game.time.events.add(500, ()=> {
-        died = true;
-        overlay_text.visible = true;
-    });
+    // game.time.events.add(500, ()=> {
+    //     died = true;
+    //     overlay_text.visible = true;
+    // });
 }
 
 function collisionEat() {
@@ -156,6 +155,9 @@ function collisionEat() {
 }
 
 function render() {
-    // game.debug.body(player);
-    // game.debug.body(ground);
+    game.debug.body(player);
+    if(enemy != null) {
+        game.debug.body(enemy);
+    }
+    game.debug.body(ground);
 }
