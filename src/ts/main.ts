@@ -34,6 +34,7 @@ function initPlayer() {
     player = game.add.sprite(160, 640, 'player');
     player.anchor.x = 0;
     player.anchor.y = 1;
+    game.physics.enable(player, Phaser.Physics.ARCADE);
 }
 
 
@@ -41,7 +42,7 @@ function initialEnemy1() {
     enemy1 = game.add.sprite(1200, 480, 'bat');
     enemy1.width = 80;
     enemy1.height = 80;
-    // game.physics.enable(enemy1, Phaser.Physics.ARCADE);
+    game.physics.enable(enemy1, Phaser.Physics.ARCADE);
     // enemy1.body.acceleration.x = -100;
     
     var demoTween = game.add.tween(enemy1).to({x:1120,y:400},1000)
@@ -68,6 +69,8 @@ function initialEnemy1() {
 }
 
 function update() {
+    game.physics.arcade.overlap(player, enemy1, collisionHandler, null, this);
+    
     if (leftKey.isDown)
     {
         player.anchor.x = 1;
@@ -81,4 +84,8 @@ function update() {
         player.scale.x = 1;
         player.x = player.x + stepMove;
     }
+}
+
+function collisionHandler() {
+    game.stage.backgroundColor = '#992d2d';
 }
