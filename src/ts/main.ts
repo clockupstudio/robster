@@ -54,8 +54,13 @@ function create() {
 }
 
 function update() {
-    game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
-
+    if (!enemy.isDisable) {
+        game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
+    }
+    
+    if (enemy.isDisable) {
+        game.physics.arcade.overlap(player, enemy, collisionEat, null, this);
+    }
 
     if (leftKey.isDown) {
         player.moveLeft();
@@ -83,9 +88,6 @@ function collisionEnemy() {
     enemy.disable();
     enemy.idle();
     enemy.fall();
-    // enemy.body.collideWorldBounds = true;
-    // enemy.body.bounce.y = 0;
-    // enemy.body.gravity.y = 200;
 }
 
 function collisionHandler() {
@@ -97,4 +99,8 @@ function collisionHandler() {
         died = true;
         overlay_text.visible = true;
     });
+}
+
+function collisionEat() {
+    enemy.visible = false;
 }
