@@ -36,6 +36,8 @@ function preload() {
     game.load.spritesheet('fireball', 'assets/images/fireball_sprite.png', 64, 64, 6);
     game.load.spritesheet('ground', 'assets/images/ground_sprite.png', 80, 80, 1);
     game.load.spritesheet('guard', 'assets/images/guard_sprite.png', 160, 160, 5);
+    game.load.spritesheet('riflebullet', 'assets/images/rifle_bullet_sprite.png', 8, 8, 1);
+    
     game.load.image("background", "assets/images/background.gif");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
     
