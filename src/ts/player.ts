@@ -1,5 +1,6 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
 /// <reference path="./sequential_frame_order_generater.ts" />
+/// <reference path="./fireBall.ts" />
 
 class Player extends Phaser.Sprite {
 
@@ -9,10 +10,11 @@ class Player extends Phaser.Sprite {
     isFiring: boolean = false;
     isDead: boolean = false;
     isIdling: boolean = false;
-    fireArray: Array<Phaser.Sprite>;
+    fireArray: Phaser.Group;
     onDead: Phaser.Signal;
     soundMove;
     soundDie;
+    fireDirection:number = 150;
 
     constructor(game: Phaser.Game) {
         super(game, 160, 640, 'player');
@@ -31,7 +33,7 @@ class Player extends Phaser.Sprite {
         this.anchor.y = 1;
         game.physics.enable(this, Phaser.Physics.ARCADE);
 
-        this.fireArray = new Array();
+        this.fireArray = this.game.add.group();
 
         this.onDead = new Phaser.Signal();
         
@@ -67,7 +69,9 @@ class Player extends Phaser.Sprite {
         if (this.jumpping) {
             return;
         }
-        this.animations.play('run');
+        this.animations.play('run').onComplete.add(()=>{
+            this.idle();
+        }, this);
     }
 
     moveRight() {
@@ -82,8 +86,11 @@ class Player extends Phaser.Sprite {
         if (this.jumpping) {
             return;
         }
-        this.animations.play('run');
+        this.animations.play('run').onComplete.add(()=>{
+            this.idle();
+        }, this);
     }
+
 
     jumpUp() {
         if (this.isDisable) {
@@ -115,15 +122,9 @@ class Player extends Phaser.Sprite {
         this.idleAtk();
         this.jumpAttack();
         
-        var fireBall:Fireball = new Fireball(game, player.x, (player.y - 130), fireDirection);
+        var fireBall:Fireball = new Fireball(this.game, this.x, (this.y - 130), this.fireDirection);
+        this.fireArray.add(fireBall);
         
-        if(this.fireArray.length > 10){
-            this.fireArray.shift();
-        }
-        
-        this.fireArray.push(fireBall);
-        this.game.add.existing(fireBall);
-
         this.game.time.events.add(300, () => {
             this.isFiring = false;
         }, this);

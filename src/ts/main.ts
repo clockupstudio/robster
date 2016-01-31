@@ -19,7 +19,7 @@ var spaceBarKey;
 var hitKey: Phaser.Key;
 var died;
 var overlay_text: Phaser.Text;
-var fireDirection = 150;
+
 var enemyGroup: Phaser.Group;
 var guard: Guard;
 
@@ -101,10 +101,10 @@ function create() {
 
 function update() {
     if (leftKey.isDown) {
-        fireDirection = -150;
+        player.fireDirection = -150;
         player.moveLeft();
     } else if (rightKey.isDown) {
-        fireDirection = 150;
+        player.fireDirection = 150;
         player.moveRight();
     }
     else {
@@ -116,7 +116,7 @@ function update() {
     game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
 
     if (guard.state !== 'stunned') {
-        player.fireArray.forEach((fireBall) => {
+        player.fireArray.children.forEach((fireBall) => {
             game.physics.arcade.overlap(fireBall, guard, fireBallHitGuard, null, this);
         });
     }
@@ -151,12 +151,13 @@ function jumpDownComplete() {
     player.idle();
 }
 
-function collisionEnemy(fireBall,bat) {
+
+function collisionEnemy(fireBall:Fireball, bat:Bat) {
+    fireBall.kill();
+    
     bat.disable();
     bat.idle();
     bat.fall();
-    //fireball.visible = false;
-    fireBall.destroy();
 }
 
 function collisionHandler() {
@@ -168,9 +169,7 @@ function collisionEat(man,bat) {
 }
 
 function fireBallHitGuard(fireBall) {
-    //fireBall.visible = false;
-    //player.fireArray.
-    fireBall.destroy();
+    fireBall.kill();
     guard.gotHit();
 }
 
