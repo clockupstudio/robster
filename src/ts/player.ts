@@ -11,6 +11,7 @@ class Player extends Phaser.Sprite {
     isIdling: boolean = false;
     fireArray: Array<Phaser.Sprite>;
     onDead: Phaser.Signal;
+    soundDie;
 
     constructor(game: Phaser.Game) {
         super(game, 160, 640, 'player');
@@ -24,7 +25,7 @@ class Player extends Phaser.Sprite {
         this.animations.add('runAtk', new SequentialFrameOrderGenerater().generate(24, 7), 8);
         this.animations.add('hit', new SequentialFrameOrderGenerater().generate(32, 1), 2);
         this.animations.add('die', new SequentialFrameOrderGenerater().generate(34, 5), 6);
-
+        
         this.anchor.x = 0;
         this.anchor.y = 1;
         game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -32,6 +33,8 @@ class Player extends Phaser.Sprite {
         this.fireArray = new Array();
 
         this.onDead = new Phaser.Signal();
+        
+        this.soundDie = this.game.add.audio('die');
     }
 
     idle() {
@@ -170,6 +173,7 @@ class Player extends Phaser.Sprite {
     }
 
     dead() {
+        this.soundDie.play();
         this.isDead = true;
         this.animations.play('die').onComplete.add(this.disable, this);
         this.onDead.dispatch();

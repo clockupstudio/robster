@@ -37,7 +37,8 @@ function preload() {
     game.load.image("background", "assets/images/background.gif");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
     
-    game.load.audio('attack', 'assets/audios/attack.wav');
+    game.load.audio('attack', 'assets/audios/player_attack.wav');
+    game.load.audio('die', 'assets/audios/player_die.wav');
     game.load.audio('enemyHit', 'assets/audios/enemy_hit.wav');
 }
 
@@ -147,11 +148,11 @@ function collisionEat() {
 }
 
 function render() {
-    // game.debug.body(player);
-    // if (enemy != null) {
-    //     game.debug.body(enemy);
-    // }
-    // game.debug.body(groundLayer);
+    game.debug.body(player);
+    if (enemy != null) {
+        game.debug.body(enemy);
+    }
+    game.debug.body(groundLayer);
 }
 
 function onPlayerDead() {
