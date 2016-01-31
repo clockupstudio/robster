@@ -36,6 +36,8 @@ function preload() {
     game.load.spritesheet('ground', 'assets/images/ground_sprite.png', 135, 135, 1);
     game.load.image("background", "assets/images/background.gif");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
+    
+    game.load.audio('attack', 'assets/audios/attack.wav');
 }
 
 function create() {

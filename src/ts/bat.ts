@@ -22,7 +22,9 @@ class Bat extends Phaser.Sprite {
     
     idle() {
         this.animations.play('idle');
-        this.flyingTween.pause();
+        if (this.flyingTween != null) {
+            this.flyingTween.pause();
+        }
     }
     
     fall() {

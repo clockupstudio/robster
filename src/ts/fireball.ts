@@ -3,7 +3,8 @@
 class Fireball extends Phaser.Sprite {
     
     direction: number;
-   
+    soundAttack;
+    
     constructor(game: Phaser.Game, x: number, y:number, direction: number) {
         this.direction = direction;
         
@@ -22,10 +23,13 @@ class Fireball extends Phaser.Sprite {
         this.animations.play('fire', 12, true);
         
         this.body.allowGravity = false;
+        
+        this.soundAttack = this.game.add.audio('attack');
     }
     
     launch() {
         this.body.velocity.x = this.direction*2;
+        this.soundAttack.play();
     }
    
 }
