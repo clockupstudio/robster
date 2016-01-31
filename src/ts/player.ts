@@ -125,9 +125,6 @@ class Player extends Phaser.Sprite {
         var fireBall:Fireball = new Fireball(this.game, this.x, (this.y - 130), this.fireDirection);
         this.fireArray.add(fireBall);
         
-        // this.game.time.events.add(300, () => {
-        //     this.isFiring = false;
-        // }, this);
         var timer:Phaser.Timer = this.game.time.create(true);
         timer.add(300, () => {
             this.isFiring = false;
