@@ -1,12 +1,15 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
+/// <reference path="./sequential_frame_order_generater.ts" />
 /// <reference path="./rifle_bullet.ts" />
+/// <reference path="./base_enemy.ts" />
 
-class Guard extends Phaser.Sprite {
+class Guard extends BaseEnemy {
     
     firedBullets:Phaser.Group;
     shootTimer:Phaser.TimerEvent;
     playSoundHit:boolean = true;
     soundHit;
+    state:string = 'idle';
     
     constructor(game:Phaser.Game, x:number, y:number){
         super(game, x, y, 'guard');
@@ -20,6 +23,7 @@ class Guard extends Phaser.Sprite {
         this.animations.play('idle');
         
         this.shootTimer = this.game.time.events.loop(3000, () => {
+            this.state = 'shooting';
             this.animations.play('shoot').onComplete.add(this.onShootCompleted, this);
             this.firedBullets.add(new RifleBullet(this.game, this.x, this.y));
         }, this);
@@ -33,10 +37,12 @@ class Guard extends Phaser.Sprite {
     }
     
     onShootCompleted(){
+        this.state = 'idle';
         this.animations.play('idle');
     }
     
     gotHit(){
+        this.state = 'stunned';
         this.animations.play('stunned');
         this.shootTimer.timer.destroy();
         if (this.playSoundHit) {

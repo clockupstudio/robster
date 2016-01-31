@@ -1,7 +1,8 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
 /// <reference path="./sequential_frame_order_generater.ts" />
+/// <reference path="./base_enemy.ts" />
 
-class Bat extends Phaser.Sprite {
+class Bat extends BaseEnemy {
     
     flyingTween:Phaser.Tween;
     fallTween:Phaser.Tween;
@@ -9,8 +10,8 @@ class Bat extends Phaser.Sprite {
     flying:boolean = false;
     soundHit;
    
-    constructor(game: Phaser.Game) {
-        super(game, 1280, 520, 'bat');
+    constructor(game: Phaser.Game, x:number, y:number) {
+        super(game, x, y, 'bat');
         this.width = 80;
         this.height = 80;
         

@@ -115,8 +115,12 @@ class Player extends Phaser.Sprite {
         this.idleAtk();
         this.jumpAttack();
         
-        fireBall = new Fireball(game, player.x, (player.y - 130), fireDirection);
-
+        var fireBall:Fireball = new Fireball(game, player.x, (player.y - 130), fireDirection);
+        
+        if(this.fireArray.length > 10){
+            this.fireArray.shift();
+        }
+        
         this.fireArray.push(fireBall);
         this.game.add.existing(fireBall);
 
