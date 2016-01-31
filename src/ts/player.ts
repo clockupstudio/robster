@@ -40,6 +40,9 @@ class Player extends Phaser.Sprite {
         if (this.isDead) {
             return;
         }
+        if (this.isFiring) {
+            return;
+        }
         this.animations.play('idle');
     }
 
