@@ -121,7 +121,12 @@ function update() {
     game.physics.arcade.collide(player, groundLayer);
     game.physics.arcade.collide(enemyGroup, groundLayer);
     game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
-
+    
+    player.fireArray.forEach((fireBall)=>{
+        game.physics.arcade.overlap(fireBall, guard, guard.gotHit, null, guard);
+    });
+    
+    
     if (player.body.velocity.y == 10) {
         player.jumpDown();
     }
