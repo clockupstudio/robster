@@ -50,7 +50,7 @@ function preload() {
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 600;
-    game.world.setBounds(0, 0, 2560, 0);
+    game.world.setBounds(0, 0, 5120, 0);
 
 
     var background = game.add.sprite(0, 0, 'background');
@@ -59,7 +59,7 @@ function create() {
     background.scale.y = 0.65;
 
     this.map = game.add.tilemap('levelMap');
-    this.map.addTilesetImage('ground', 'ground');
+    this.map.addTilesetImage('ground_sprite', 'ground');
     groundLayer = this.map.createLayer('Ground');
     groundLayer.resizeWorld();
     this.map.createLayer('Background');
