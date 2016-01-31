@@ -20,6 +20,7 @@ var died;
 var overlay_text: Phaser.Text;
 var fireDirection = 150;
 var enemyGroup: Phaser.Group;
+var guard:Guard;
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -89,7 +90,7 @@ function create() {
     enemy = new Bat(game);
     enemyGroup.add(enemy);
     
-    var guard = new Guard(game, 1000, 640);
+    guard = new Guard(game, 1000, 640);
     enemyGroup.add(guard);
 }
 
@@ -119,6 +120,7 @@ function update() {
 
     game.physics.arcade.collide(player, groundLayer);
     game.physics.arcade.collide(enemyGroup, groundLayer);
+    game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
 
     if (player.body.velocity.y == 10) {
         player.jumpDown();
