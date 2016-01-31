@@ -212,5 +212,5 @@ function guardsBorn() {
         guards.push(new Guard(game, saveZone+ (range*n), 640));
     }
     
-    guards.push(new SpecialGuard(game, 2000, 640));
+    guards.push(new SpecialGuard(game, 3000, 640));
 }

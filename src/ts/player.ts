@@ -125,9 +125,14 @@ class Player extends Phaser.Sprite {
         var fireBall:Fireball = new Fireball(this.game, this.x, (this.y - 130), this.fireDirection);
         this.fireArray.add(fireBall);
         
-        this.game.time.events.add(300, () => {
+        // this.game.time.events.add(300, () => {
+        //     this.isFiring = false;
+        // }, this);
+        var timer:Phaser.Timer = this.game.time.create(true);
+        timer.add(300, () => {
             this.isFiring = false;
         }, this);
+        timer.start();
 
         fireBall.launch();
     }
@@ -168,13 +173,13 @@ class Player extends Phaser.Sprite {
         striking.to({ x: (this.x - 50) }, 100);
         striking.start();
 
-        var graphics: Phaser.Graphics = game.add.graphics(0, 0);
+        var graphics: Phaser.Graphics = this.game.add.graphics(0, 0);
         graphics.beginFill(0xFF0000, 1);
         graphics.drawRect(0, 0, 1280, 720);
         graphics.endFill();
         graphics.fixedToCamera = true;
 
-        var damaged: Phaser.Tween = game.add.tween(graphics);
+        var damaged: Phaser.Tween = this.game.add.tween(graphics);
         damaged.to({ alpha: 0 }, 300, null);
         damaged.start();
     }
