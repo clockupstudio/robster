@@ -114,7 +114,8 @@ function update() {
     game.physics.arcade.collide(player, groundLayer);
     game.physics.arcade.collide(enemyGroup, groundLayer);
     game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
-
+    game.physics.arcade.overlap(player, guard, guard.gotEaten, null, guard);
+    
     if (guard.state !== 'stunned') {
         player.fireArray.children.forEach((fireBall) => {
             game.physics.arcade.overlap(fireBall, guard, fireBallHitGuard, null, this);
@@ -129,7 +130,7 @@ function update() {
         game.state.restart();
     }
     
-    bats.forEach(function(bat) {
+    bats.forEach(function(bat:Bat) {
         if (!bat.isDisable) {
             if (bat.x -player.x <= 600 ) {
                 bat.fly();
@@ -137,7 +138,7 @@ function update() {
             game.physics.arcade.overlap(player, bat, collisionHandler, null, this);
             player.fireArray.forEach(function(fireball) {
                 game.physics.arcade.overlap(fireball, bat, collisionEnemy, null, this);
-            });
+            }, this);
         }
         if (bat.isDisable) {
             game.physics.arcade.overlap(player, bat, collisionEat, null, this);
@@ -175,11 +176,7 @@ function fireBallHitGuard(fireBall) {
 
 
 function render() {
-    game.debug.body(player);
-    // if (enemy != null) {
-    //     game.debug.body(enemy);
-    // }
-    game.debug.body(groundLayer);
+    // game.debug.body(player);
 }
 
 function onPlayerDead() {
