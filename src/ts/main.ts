@@ -41,6 +41,7 @@ function preload() {
     game.load.spritesheet('guard', 'assets/images/guard_sprite.png', 160, 160, 5);
     game.load.spritesheet('riflebullet', 'assets/images/rifle_bullet_sprite.png', 8, 8, 1);
     game.load.spritesheet('batmemory', 'assets/images/bat-memory.png', 724, 443, 1);
+    game.load.spritesheet('guardmemory', 'assets/images/uncle-memory', 724, 443, 1);
 
     game.load.image("background", "assets/images/background.gif");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
