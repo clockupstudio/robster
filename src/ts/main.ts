@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => display());
 var groundLayer;
 var game: Phaser.Game;
 var enemy;
-var fireBall;
 var player: Player;
 var leftKey;
 var rightKey;
@@ -177,11 +176,11 @@ function fireBallHitGuard(fireBall) {
 
 
 function render() {
-    game.debug.body(player);
-    if (enemy != null) {
-        game.debug.body(enemy);
-    }
-    game.debug.body(groundLayer);
+    // game.debug.body(player);
+    // if (enemy != null) {
+    //     game.debug.body(enemy);
+    // }
+    // game.debug.body(groundLayer);
 }
 
 function onPlayerDead() {
