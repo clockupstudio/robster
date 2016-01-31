@@ -128,6 +128,10 @@ function update() {
         game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
         game.physics.arcade.overlap(player, guard, guard.gotEaten, null, guard);
         if (guard.state !== 'stunned') {
+            if (guard.x -player.x <= 400 ) {
+                guard.shoot();
+            }
+
             player.fireArray.forEach((fireBall) => {
                 game.physics.arcade.overlap(fireBall, guard, fireBallHitGuard, null, this);
             },this);
@@ -174,8 +178,9 @@ function collisionEat(man,bat) {
 }
 
 
-function fireBallHitGuard(fireBall) {
+function fireBallHitGuard(fireBall, guard) {
     fireBall.kill();
+    guard.gotHit();
 }
 
 function render() {

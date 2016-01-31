@@ -36,6 +36,10 @@ class Guard extends BaseEnemy {
         this.soundHit = this.game.add.audio('enemyHit');
     }
     
+    shoot() {
+        
+    }
+    
     onShootCompleted(){
         this.state = 'idle';
         this.animations.play('idle');
