@@ -5,6 +5,7 @@
 /// <reference path="./bat.ts" />
 /// <reference path="./guard.ts" />
 /// <reference path="./special_bat.ts" />
+/// <reference path="./special_guard.ts" />
 
 document.addEventListener('DOMContentLoaded', () => display());
 
@@ -41,7 +42,7 @@ function preload() {
     game.load.spritesheet('guard', 'assets/images/guard_sprite.png', 160, 160, 5);
     game.load.spritesheet('riflebullet', 'assets/images/rifle_bullet_sprite.png', 8, 8, 1);
     game.load.spritesheet('batmemory', 'assets/images/bat-memory.png', 724, 443, 1);
-    game.load.spritesheet('guardmemory', 'assets/images/uncle-memory', 724, 443, 1);
+    game.load.spritesheet('guardmemory', 'assets/images/uncle-memory.png', 724, 443, 1);
 
     game.load.image("background", "assets/images/background.png");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
@@ -199,7 +200,7 @@ function batsBorn() {
         bats.push(new Bat(game, saveZone+ (range*n), 520));
     }
     
-     bats.push(new SpecialBat(game, 1000, 520));
+     bats.push(new SpecialBat(game, 1500, 520));
 }
 
 function guardsBorn() {
@@ -210,4 +211,6 @@ function guardsBorn() {
     for (var n=1; n<4; n++) {
         guards.push(new Guard(game, saveZone+ (range*n), 640));
     }
+    
+    guards.push(new SpecialGuard(game, 2000, 640));
 }
