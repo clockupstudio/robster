@@ -1,7 +1,8 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
 /// <reference path="./rifle_bullet.ts" />
+/// <reference path="./base_enemy.ts" />
 
-class Guard extends Phaser.Sprite {
+class Guard extends BaseEnemy {
     
     firedBullets:Phaser.Group;
     shootTimer:Phaser.TimerEvent;

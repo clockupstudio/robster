@@ -4,6 +4,7 @@
 /// <reference path="./bat.ts" />
 /// <reference path="./fireball.ts" />
 /// <reference path="./guard.ts" />
+/// <reference path="./special_bat.ts" />
 
 document.addEventListener('DOMContentLoaded', () => display());
 
@@ -21,6 +22,7 @@ var overlay_text: Phaser.Text;
 var fireDirection = 150;
 var enemyGroup: Phaser.Group;
 var guard: Guard;
+var specialBat: SpecialBat;
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -87,11 +89,14 @@ function create() {
 
     enemyGroup = game.add.group();
 
-    enemy = new Bat(game);
+    enemy = new Bat(game, 1280, 520);
     enemyGroup.add(enemy);
 
     guard = new Guard(game, 2000, 640);
     enemyGroup.add(guard);
+    
+    specialBat = new SpecialBat(game, 1000, 520);
+    enemyGroup.add(specialBat);
 }
 
 function update() {
@@ -115,12 +120,13 @@ function update() {
     }
 
     if (enemy.isDisable) {
-        game.physics.arcade.overlap(player, enemy, collisionEat, null, this);
+        game.physics.arcade.overlap(player, enemy, enemy.gotEaten, null, enemy);
     }
 
     game.physics.arcade.collide(player, groundLayer);
     game.physics.arcade.collide(enemyGroup, groundLayer);
     game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
+    game.physics.arcade.overlap(player, guard, guard.gotEaten, null, guard);
 
     if (guard.state !== 'stunned') {
         player.fireArray.forEach((fireBall) => {
@@ -153,7 +159,6 @@ function collisionEnemy(fireBall) {
     enemy.disable();
     enemy.idle();
     enemy.fall();
-    //fireball.visible = false;
     fireBall.destroy();
 }
 
@@ -166,8 +171,6 @@ function collisionEat() {
 }
 
 function fireBallHitGuard(fireBall) {
-    //fireBall.visible = false;
-    //player.fireArray.
     fireBall.destroy();
     guard.gotHit();
 }
