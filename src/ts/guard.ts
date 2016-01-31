@@ -5,6 +5,8 @@ class Guard extends Phaser.Sprite {
     
     firedBullets:Phaser.Group;
     shootTimer:Phaser.TimerEvent;
+    playSoundHit:boolean = true;
+    soundHit;
     
     constructor(game:Phaser.Game, x:number, y:number){
         super(game, x, y, 'guard');
@@ -26,6 +28,8 @@ class Guard extends Phaser.Sprite {
         
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.allowGravity = false;
+        
+        this.soundHit = this.game.add.audio('enemyHit');
     }
     
     onShootCompleted(){
@@ -35,5 +39,10 @@ class Guard extends Phaser.Sprite {
     gotHit(){
         this.animations.play('stunned');
         this.shootTimer.timer.destroy();
+        if (this.playSoundHit) {
+            this.playSoundHit = false;
+            this.soundHit.play();
+        }
+        
     }
 }

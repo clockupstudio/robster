@@ -42,6 +42,7 @@ function preload() {
     game.load.image("background", "assets/images/background.gif");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
     
+    game.load.audio('move', 'assets/audios/player_move.wav');
     game.load.audio('attack', 'assets/audios/player_attack.wav');
     game.load.audio('die', 'assets/audios/player_die.wav');
     game.load.audio('enemyHit', 'assets/audios/enemy_hit.wav');
