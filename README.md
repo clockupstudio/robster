@@ -1,24 +1,33 @@
 # robster
 Game we made at Game Jam 2016.
 
-# Install tools
+## Install tools
 
 install node and npm
 https://docs.npmjs.com/getting-started/installing-node
 
 install npm package
-$npm install
+```bash
+$ npm install
+```
 
 install bower
-$npm install -g bower
+```bash
+$ npm install -g bower
+```
 
 install bower package
-$bower install
-
+```bash
+$ bower install
+```
 install grunt
-$npm install -g grunt-cli
+```bash
+$ npm install -g grunt-cli
+```
 
-#Running
-$grunt run
+##Running
+```bash
+$ grunt run
+```
 
 Open your browser at localhost:8090 and enjoy :).
