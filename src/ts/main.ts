@@ -1,8 +1,8 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
 /// <reference path="./sequential_frame_order_generater.ts" />
 /// <reference path="./player.ts" />
-/// <reference path="./bat.ts" />
 /// <reference path="./fireball.ts" />
+/// <reference path="./bat.ts" />
 /// <reference path="./guard.ts" />
 
 document.addEventListener('DOMContentLoaded', () => display());
@@ -21,7 +21,8 @@ var died;
 var overlay_text: Phaser.Text;
 
 var enemyGroup: Phaser.Group;
-var guard: Guard;
+var guards: Array<Guard>;
+
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -88,15 +89,15 @@ function create() {
 
     enemyGroup = game.add.group();
 
-    // enemy = new Bat(game, 1280, 520);
-    // enemyGroup.add(enemy);
     batsBorn();
     bats.forEach(function(bat) {
         enemyGroup.add(bat);
     });
 
-    guard = new Guard(game, 2000, 640);
-    enemyGroup.add(guard);
+    guardsBorn()
+    guards.forEach(function(guard) {
+        enemyGroup.add(guard);
+    });
 }
 
 function update() {
@@ -113,14 +114,6 @@ function update() {
 
     game.physics.arcade.collide(player, groundLayer);
     game.physics.arcade.collide(enemyGroup, groundLayer);
-    game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
-    game.physics.arcade.overlap(player, guard, guard.gotEaten, null, guard);
-    
-    if (guard.state !== 'stunned') {
-        player.fireArray.children.forEach((fireBall) => {
-            game.physics.arcade.overlap(fireBall, guard, fireBallHitGuard, null, this);
-        });
-    }
 
     if (player.body.velocity.y == 10) {
         player.jumpDown();
@@ -129,6 +122,17 @@ function update() {
     if (spaceBarKey.isDown && player.isDead) {
         game.state.restart();
     }
+
+
+    guards.forEach(function(guard) {
+        game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
+        game.physics.arcade.overlap(player, guard, guard.gotEaten, null, guard);
+        if (guard.state !== 'stunned') {
+            player.fireArray.forEach((fireBall) => {
+                game.physics.arcade.overlap(fireBall, guard, fireBallHitGuard, null, this);
+            },this);
+        }
+    });
     
     bats.forEach(function(bat:Bat) {
         if (!bat.isDisable) {
@@ -169,11 +173,10 @@ function collisionEat(man,bat) {
     bat.destroy();
 }
 
+
 function fireBallHitGuard(fireBall) {
     fireBall.kill();
-    guard.gotHit();
 }
-
 
 function render() {
     // game.debug.body(player);
@@ -190,5 +193,15 @@ function batsBorn() {
     
     for (var n=1; n<=6; n++) {
         bats.push(new Bat(game, saveZone+ (range*n), 520));
+    }
+}
+
+function guardsBorn() {
+    var saveZone = 600;
+    var range = (80*64) /4
+    guards = new Array();
+    
+    for (var n=1; n<4; n++) {
+        guards.push(new Guard(game, saveZone+ (range*n), 640));
     }
 }

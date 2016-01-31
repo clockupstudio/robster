@@ -1,6 +1,6 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
 /// <reference path="./sequential_frame_order_generater.ts" />
-/// <reference path="./fireBall.ts" />
+/// <reference path="./fireball.ts" />
 
 class Player extends Phaser.Sprite {
 
