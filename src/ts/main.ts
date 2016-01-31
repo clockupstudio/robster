@@ -4,13 +4,14 @@
 /// <reference path="./bat.ts" />
 /// <reference path="./fireball.ts" />
 /// <reference path="./guard.ts" />
-/// <reference path="./special_bat.ts" />
 
 document.addEventListener('DOMContentLoaded', () => display());
 
 var groundLayer;
 var game: Phaser.Game;
-var enemy;
+// var enemy;
+var bats: Array<Bat>;
+var fireBall;
 var player: Player;
 var leftKey;
 var rightKey;
@@ -21,7 +22,6 @@ var overlay_text: Phaser.Text;
 var fireDirection = 150;
 var enemyGroup: Phaser.Group;
 var guard: Guard;
-var specialBat: SpecialBat;
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -42,8 +42,7 @@ function preload() {
 
     game.load.image("background", "assets/images/background.gif");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
-    
-    game.load.audio('move', 'assets/audios/player_move.wav');
+
     game.load.audio('attack', 'assets/audios/player_attack.wav');
     game.load.audio('die', 'assets/audios/player_die.wav');
     game.load.audio('enemyHit', 'assets/audios/enemy_hit.wav');
@@ -89,14 +88,15 @@ function create() {
 
     enemyGroup = game.add.group();
 
-    enemy = new Bat(game, 1280, 520);
-    enemyGroup.add(enemy);
+    // enemy = new Bat(game, 1280, 520);
+    // enemyGroup.add(enemy);
+    batsBorn();
+    bats.forEach(function(bat) {
+        enemyGroup.add(bat);
+    });
 
     guard = new Guard(game, 2000, 640);
     enemyGroup.add(guard);
-    
-    specialBat = new SpecialBat(game, 1000, 520);
-    enemyGroup.add(specialBat);
 }
 
 function update() {
@@ -111,22 +111,21 @@ function update() {
         player.idle();
     }
 
-    if (player.x == 450) {
-        enemy.fly(1280);
-    }
+    // if (player.x == 450) {
+    //     enemy.fly();
+    // }
 
-    if (!enemy.isDisable) {
-        game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
-    }
+    // if (!enemy.isDisable) {
+    //     game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
+    // }
 
-    if (enemy.isDisable) {
-        game.physics.arcade.overlap(player, enemy, enemy.gotEaten, null, enemy);
-    }
+    // if (enemy.isDisable) {
+    //     game.physics.arcade.overlap(player, enemy, collisionEat, null, this);
+    // }
 
     game.physics.arcade.collide(player, groundLayer);
     game.physics.arcade.collide(enemyGroup, groundLayer);
     game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
-    game.physics.arcade.overlap(player, guard, guard.gotEaten, null, guard);
 
     if (guard.state !== 'stunned') {
         player.fireArray.forEach((fireBall) => {
@@ -139,15 +138,33 @@ function update() {
         player.jumpDown();
     }
 
-    if (!enemy.isDisable) {
-        player.fireArray.forEach(function(fireball) {
-            game.physics.arcade.overlap(fireball, enemy, collisionEnemy, null, this);
-        });
-    }
+    // if (!enemy.isDisable) {
+    //     player.fireArray.forEach(function(fireball) {
+    //         game.physics.arcade.overlap(fireball, enemy, collisionEnemy, null, this);
+    //     });
+    // }
 
     if (spaceBarKey.isDown && player.isDead) {
         game.state.restart();
     }
+    
+    bats.forEach(function(bat) {
+        if (bat.x -player.x <= 600 ) {
+            bat.fly();
+        }
+        if (!bat.isDisable) {
+            game.physics.arcade.overlap(player, bat, collisionHandler, null, this);
+        }
+        if (bat.isDisable) {
+            game.physics.arcade.overlap(player, bat, collisionEat, null, this);
+        }
+        if (!bat.isDisable) {
+            player.fireArray.forEach(function(fireball) {
+                game.physics.arcade.overlap(fireball, bat, collisionEnemy, null, this);
+            });
+        }
+    });
+    
 }
 
 function jumpDownComplete() {
@@ -155,10 +172,11 @@ function jumpDownComplete() {
     player.idle();
 }
 
-function collisionEnemy(fireBall) {
-    enemy.disable();
-    enemy.idle();
-    enemy.fall();
+function collisionEnemy(fireBall,bat) {
+    bat.disable();
+    bat.idle();
+    bat.fall();
+    //fireball.visible = false;
     fireBall.destroy();
 }
 
@@ -166,24 +184,36 @@ function collisionHandler() {
     player.gotHit();
 }
 
-function collisionEat() {
-    enemy.destroy();
+function collisionEat(man,bat) {
+    bat.destroy();
 }
 
 function fireBallHitGuard(fireBall) {
+    //fireBall.visible = false;
+    //player.fireArray.
     fireBall.destroy();
     guard.gotHit();
 }
 
 
 function render() {
-    // game.debug.body(player);
+    game.debug.body(player);
     // if (enemy != null) {
     //     game.debug.body(enemy);
     // }
-    // game.debug.body(groundLayer);
+    game.debug.body(groundLayer);
 }
 
 function onPlayerDead() {
     overlay_text.visible = true;
+}
+
+function batsBorn() {
+    var saveZone = 450;
+    var range = (80*64) / 6;
+    bats = new Array();
+    
+    for (var n=1; n<=6; n++) {
+        bats.push(new Bat(game, saveZone+ (range*n), 520));
+    }
 }
