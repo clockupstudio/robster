@@ -3,6 +3,7 @@
 /// <reference path="./player.ts" />
 /// <reference path="./bat.ts" />
 /// <reference path="./fireball.ts" />
+/// <reference path="./guard.ts" />
 
 document.addEventListener('DOMContentLoaded', () => display());
 
@@ -33,7 +34,8 @@ function preload() {
     game.load.spritesheet('player', 'assets/images/player_sprite.png', 160, 160, 40);
     game.load.spritesheet('bat', 'assets/images/bat_sprite.png', 80, 80, 3);
     game.load.spritesheet('fireball', 'assets/images/fireball_sprite.png', 64, 64, 6);
-    game.load.spritesheet('ground', 'assets/images/ground_sprite.png', 135, 135, 1);
+    game.load.spritesheet('ground', 'assets/images/ground_sprite.png', 80, 80, 1);
+    game.load.spritesheet('guard', 'assets/images/guard_sprite.png', 160, 160, 5);
     game.load.image("background", "assets/images/background.gif");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
     
@@ -81,8 +83,12 @@ function create() {
     overlay_text.fixedToCamera = true;
     
     enemyGroup = game.add.group();
+    
     enemy = new Bat(game);
     enemyGroup.add(enemy);
+    
+    var guard = new Guard(game, 1000, 640);
+    enemyGroup.add(guard);
 }
 
 function update() {
