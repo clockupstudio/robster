@@ -90,7 +90,7 @@ function create() {
     enemy = new Bat(game);
     enemyGroup.add(enemy);
     
-    guard = new Guard(game, 1000, 640);
+    guard = new Guard(game, 2000, 640);
     enemyGroup.add(guard);
 }
 
@@ -159,8 +159,11 @@ function collisionHandler() {
 }
 
 function collisionEat() {
-    enemy.visible = false;
+    //enemy.visible = false;
+    enemy.destroy();
 }
+
+
 
 function render() {
     game.debug.body(player);
