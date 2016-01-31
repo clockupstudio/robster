@@ -3,6 +3,6 @@
 class BaseEnemy extends Phaser.Sprite {
     
     gotEaten(){
-        this.destroy();
+        this.kill();
     }
 }
