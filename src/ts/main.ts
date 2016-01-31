@@ -41,7 +41,7 @@ function preload() {
     game.load.spritesheet('guard', 'assets/images/guard_sprite.png', 160, 160, 5);
     game.load.spritesheet('riflebullet', 'assets/images/rifle_bullet_sprite.png', 8, 8, 1);
 
-    game.load.image("background", "assets/images/background.gif");
+    game.load.image("background", "assets/images/background.png");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
 
     game.load.audio('attack', 'assets/audios/player_attack.wav');
@@ -54,11 +54,8 @@ function create() {
     game.physics.arcade.gravity.y = 600;
     game.world.setBounds(0, 0, 5120, 0);
 
-
     var background = game.add.sprite(0, 0, 'background');
     background.fixedToCamera = true;
-    background.scale.x = 0.65;
-    background.scale.y = 0.65;
 
     this.map = game.add.tilemap('levelMap');
     this.map.addTilesetImage('ground_sprite', 'ground');
