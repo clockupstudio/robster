@@ -111,18 +111,6 @@ function update() {
         player.idle();
     }
 
-    // if (player.x == 450) {
-    //     enemy.fly();
-    // }
-
-    // if (!enemy.isDisable) {
-    //     game.physics.arcade.overlap(player, enemy, collisionHandler, null, this);
-    // }
-
-    // if (enemy.isDisable) {
-    //     game.physics.arcade.overlap(player, enemy, collisionEat, null, this);
-    // }
-
     game.physics.arcade.collide(player, groundLayer);
     game.physics.arcade.collide(enemyGroup, groundLayer);
     game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
@@ -133,35 +121,26 @@ function update() {
         });
     }
 
-
     if (player.body.velocity.y == 10) {
         player.jumpDown();
     }
-
-    // if (!enemy.isDisable) {
-    //     player.fireArray.forEach(function(fireball) {
-    //         game.physics.arcade.overlap(fireball, enemy, collisionEnemy, null, this);
-    //     });
-    // }
 
     if (spaceBarKey.isDown && player.isDead) {
         game.state.restart();
     }
     
     bats.forEach(function(bat) {
-        if (bat.x -player.x <= 600 ) {
-            bat.fly();
-        }
         if (!bat.isDisable) {
+            if (bat.x -player.x <= 600 ) {
+                bat.fly();
+            }
             game.physics.arcade.overlap(player, bat, collisionHandler, null, this);
-        }
-        if (bat.isDisable) {
-            game.physics.arcade.overlap(player, bat, collisionEat, null, this);
-        }
-        if (!bat.isDisable) {
             player.fireArray.forEach(function(fireball) {
                 game.physics.arcade.overlap(fireball, bat, collisionEnemy, null, this);
             });
+        }
+        if (bat.isDisable) {
+            game.physics.arcade.overlap(player, bat, collisionEat, null, this);
         }
     });
     
