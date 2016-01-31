@@ -38,6 +38,7 @@ function preload() {
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
     
     game.load.audio('attack', 'assets/audios/attack.wav');
+    game.load.audio('enemyHit', 'assets/audios/enemy_hit.wav');
 }
 
 function create() {

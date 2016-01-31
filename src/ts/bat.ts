@@ -2,10 +2,12 @@
 /// <reference path="./sequential_frame_order_generater.ts" />
 
 class Bat extends Phaser.Sprite {
+    
     flyingTween:Phaser.Tween;
     fallTween:Phaser.Tween;
     isDisable:boolean = false;
     flying:boolean = false;
+    soundHit;
    
     constructor(game: Phaser.Game) {
         super(game, 1280, 520, 'bat');
@@ -18,6 +20,8 @@ class Bat extends Phaser.Sprite {
         game.physics.enable(this, Phaser.Physics.ARCADE);
         
         this.animations.play('fly');
+        
+        this.soundHit = this.game.add.audio('enemyHit');
     }
     
     idle() {
@@ -31,6 +35,7 @@ class Bat extends Phaser.Sprite {
         this.fallTween = this.game.add.tween(this)
         .to({x:this.x, y:575}, 400);
         this.fallTween.start();
+        this.soundHit.play();
     }
     
     fly(x:number) {
