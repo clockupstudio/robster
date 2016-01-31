@@ -8,6 +8,7 @@ class Player extends Phaser.Sprite {
     jumpping: boolean = false;
     isFiring: boolean = false;
     isDead: boolean = false;
+    isIdling: boolean = false;
     fireArray: Array<Phaser.Sprite>;
     onDead: Phaser.Signal;
 
@@ -43,6 +44,7 @@ class Player extends Phaser.Sprite {
         if (this.isFiring) {
             return;
         }
+        this.isIdling = true;
         this.animations.play('idle');
     }
 
@@ -97,16 +99,17 @@ class Player extends Phaser.Sprite {
         this.jumpping = false;
         this.animations.play('idle');
     }
-
-    idleAtk() {
+    
+    attack(){
         if (this.isFiring) {
             return;
         }
 
         this.isFiring = true;
-
-        this.animations.play('idleAtk').onComplete.add(this.idle, this);
-
+        
+        this.idleAtk();
+        this.jumpAttack();
+        
         fireBall = new Fireball(game, player.x, (player.y - 130), fireDirection);
 
         this.fireArray.push(fireBall);
@@ -117,6 +120,20 @@ class Player extends Phaser.Sprite {
         }, this);
 
         fireBall.launch();
+    }
+
+    idleAtk() {
+        if( this.isFiring && this.jumpping){
+            return;
+        }
+        this.animations.play('idleAtk').onComplete.add(this.idle, this);
+    }
+    
+    jumpAttack() {
+        if( !this.jumpping ){
+            return;
+        }
+        this.animations.play('jumpAtk').onComplete.add(this.idle, this);
     }
 
     disable() {

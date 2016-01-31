@@ -69,7 +69,7 @@ function create() {
     spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceBarKey.onUp.add(player.jumpUp, player);
     hitKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
-    hitKey.onUp.add(player.idleAtk, player);
+    hitKey.onUp.add(player.attack, player);
 
     died = false;
 
