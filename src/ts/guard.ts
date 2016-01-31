@@ -5,6 +5,7 @@ class Guard extends Phaser.Sprite {
     
     firedBullets:Phaser.Group;
     shootTimer:Phaser.TimerEvent;
+    state:string = 'idle';
     
     constructor(game:Phaser.Game, x:number, y:number){
         super(game, x, y, 'guard');
@@ -18,6 +19,7 @@ class Guard extends Phaser.Sprite {
         this.animations.play('idle');
         
         this.shootTimer = this.game.time.events.loop(3000, () => {
+            this.state = 'shooting';
             this.animations.play('shoot').onComplete.add(this.onShootCompleted, this);
             this.firedBullets.add(new RifleBullet(this.game, this.x, this.y));
         }, this);
@@ -29,10 +31,12 @@ class Guard extends Phaser.Sprite {
     }
     
     onShootCompleted(){
+        this.state = 'idle';
         this.animations.play('idle');
     }
     
     gotHit(){
+        this.state = 'stunned';
         this.animations.play('stunned');
         this.shootTimer.timer.destroy();
     }

@@ -8,7 +8,7 @@
 document.addEventListener('DOMContentLoaded', () => display());
 
 var groundLayer;
-var game:Phaser.Game;
+var game: Phaser.Game;
 var enemy;
 var fireBall;
 var player: Player;
@@ -20,7 +20,7 @@ var died;
 var overlay_text: Phaser.Text;
 var fireDirection = 150;
 var enemyGroup: Phaser.Group;
-var guard:Guard;
+var guard: Guard;
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -38,10 +38,10 @@ function preload() {
     game.load.spritesheet('ground', 'assets/images/ground_sprite.png', 80, 80, 1);
     game.load.spritesheet('guard', 'assets/images/guard_sprite.png', 160, 160, 5);
     game.load.spritesheet('riflebullet', 'assets/images/rifle_bullet_sprite.png', 8, 8, 1);
-    
+
     game.load.image("background", "assets/images/background.gif");
     game.load.tilemap('levelMap', "assets/level.json", null, Phaser.Tilemap.TILED_JSON);
-    
+
     game.load.audio('attack', 'assets/audios/player_attack.wav');
     game.load.audio('die', 'assets/audios/player_die.wav');
     game.load.audio('enemyHit', 'assets/audios/enemy_hit.wav');
@@ -57,7 +57,7 @@ function create() {
     background.fixedToCamera = true;
     background.scale.x = 0.65;
     background.scale.y = 0.65;
-    
+
     this.map = game.add.tilemap('levelMap');
     this.map.addTilesetImage('ground', 'ground');
     groundLayer = this.map.createLayer('Ground');
@@ -84,12 +84,12 @@ function create() {
     overlay_text.setTextBounds(0, 100, 1280, 720);
     overlay_text.visible = died;
     overlay_text.fixedToCamera = true;
-    
+
     enemyGroup = game.add.group();
-    
+
     enemy = new Bat(game);
     enemyGroup.add(enemy);
-    
+
     guard = new Guard(game, 2000, 640);
     enemyGroup.add(guard);
 }
@@ -121,12 +121,14 @@ function update() {
     game.physics.arcade.collide(player, groundLayer);
     game.physics.arcade.collide(enemyGroup, groundLayer);
     game.physics.arcade.overlap(player, guard.firedBullets, collisionHandler, null, this);
-    
-    player.fireArray.forEach((fireBall)=>{
-        game.physics.arcade.overlap(fireBall, guard, guard.gotHit, null, guard);
-    });
-    
-    
+
+    if (guard.state !== 'stunned') {
+        player.fireArray.forEach((fireBall) => {
+            game.physics.arcade.overlap(fireBall, guard, fireBallHitGuard, null, this);
+        });
+    }
+
+
     if (player.body.velocity.y == 10) {
         player.jumpDown();
     }
@@ -147,11 +149,12 @@ function jumpDownComplete() {
     player.idle();
 }
 
-function collisionEnemy(fireball) {
+function collisionEnemy(fireBall) {
     enemy.disable();
     enemy.idle();
     enemy.fall();
-    fireball.visible = false;
+    //fireball.visible = false;
+    fireBall.destroy();
 }
 
 function collisionHandler() {
@@ -159,10 +162,15 @@ function collisionHandler() {
 }
 
 function collisionEat() {
-    //enemy.visible = false;
     enemy.destroy();
 }
 
+function fireBallHitGuard(fireBall) {
+    //fireBall.visible = false;
+    //player.fireArray.
+    fireBall.destroy();
+    guard.gotHit();
+}
 
 
 function render() {

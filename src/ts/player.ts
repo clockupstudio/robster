@@ -104,6 +104,7 @@ class Player extends Phaser.Sprite {
     }
     
     attack(){
+        console.log(this.isFiring);
         if (this.isFiring) {
             return;
         }
@@ -113,12 +114,18 @@ class Player extends Phaser.Sprite {
         this.idleAtk();
         this.jumpAttack();
         
-        fireBall = new Fireball(game, player.x, (player.y - 130), fireDirection);
-
+        var fireBall:Fireball = new Fireball(game, player.x, (player.y - 130), fireDirection);
+        
+        if(this.fireArray.length > 10){
+            this.fireArray.shift();
+        }
+        
         this.fireArray.push(fireBall);
+        console.log('Im here')
         this.game.add.existing(fireBall);
 
         this.game.time.events.add(300, () => {
+            console.log('reset firing')
             this.isFiring = false;
         }, this);
 
