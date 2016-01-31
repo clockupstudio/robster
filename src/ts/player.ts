@@ -11,6 +11,7 @@ class Player extends Phaser.Sprite {
     isIdling: boolean = false;
     fireArray: Array<Phaser.Sprite>;
     onDead: Phaser.Signal;
+    soundMove;
     soundDie;
 
     constructor(game: Phaser.Game) {
@@ -34,6 +35,7 @@ class Player extends Phaser.Sprite {
 
         this.onDead = new Phaser.Signal();
         
+        this.soundMove = this.game.add.audio('move');
         this.soundDie = this.game.add.audio('die');
     }
 

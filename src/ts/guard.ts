@@ -1,4 +1,5 @@
 /// <reference path="../../bower_components/phaser/typescript/phaser.d.ts" />
+/// <reference path="./sequential_frame_order_generater.ts" />
 /// <reference path="./rifle_bullet.ts" />
 /// <reference path="./base_enemy.ts" />
 
@@ -6,6 +7,8 @@ class Guard extends BaseEnemy {
     
     firedBullets:Phaser.Group;
     shootTimer:Phaser.TimerEvent;
+    playSoundHit:boolean = true;
+    soundHit;
     state:string = 'idle';
     
     constructor(game:Phaser.Game, x:number, y:number){
@@ -29,6 +32,8 @@ class Guard extends BaseEnemy {
         
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.allowGravity = false;
+        
+        this.soundHit = this.game.add.audio('enemyHit');
     }
     
     onShootCompleted(){
@@ -40,5 +45,10 @@ class Guard extends BaseEnemy {
         this.state = 'stunned';
         this.animations.play('stunned');
         this.shootTimer.timer.destroy();
+        if (this.playSoundHit) {
+            this.playSoundHit = false;
+            this.soundHit.play();
+        }
+        
     }
 }
