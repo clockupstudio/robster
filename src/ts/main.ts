@@ -18,7 +18,7 @@ var hitKey: Phaser.Key;
 var died;
 var overlay_text: Phaser.Text;
 var fireDirection = 150;
-
+var enemyGroup: Phaser.Group;
 
 function display() {
     game = new Phaser.Game(1280, 720, Phaser.AUTO, 'robster', {
@@ -61,9 +61,6 @@ function create() {
     game.add.existing(player);
     game.camera.follow(player);
 
-    enemy = new Bat(game);
-    game.add.existing(enemy);
-
     leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     spaceBarKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -78,6 +75,10 @@ function create() {
     overlay_text.setTextBounds(0, 100, 1280, 720);
     overlay_text.visible = died;
     overlay_text.fixedToCamera = true;
+    
+    enemyGroup = game.add.group();
+    enemy = new Bat(game);
+    enemyGroup.add(enemy);
 }
 
 function update() {
@@ -105,6 +106,7 @@ function update() {
     }
 
     game.physics.arcade.collide(player, groundLayer);
+    game.physics.arcade.collide(enemyGroup, groundLayer);
 
     if (player.body.velocity.y == 10) {
         player.jumpDown();
