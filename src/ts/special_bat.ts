@@ -11,9 +11,11 @@ class SpecialBat extends Bat {
     gotEaten(){
         var batMemory: BatMemory = new BatMemory(this.game);
         this.game.add.existing(batMemory);
-        this.game.time.events.add(300, () => {
+        var timer:Phaser.Timer = this.game.time.create(true);
+        timer.add(300, () => {
             batMemory.kill();
         }, this);
+        timer.start();
         super.gotEaten();
     }
 }
