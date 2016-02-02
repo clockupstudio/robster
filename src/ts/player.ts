@@ -164,7 +164,9 @@ class Player extends Phaser.Sprite {
         this.animations.play('hit');
         this.disable();
 
-        this.game.time.events.add(500, this.dead, this);
+        var timer:Phaser.Timer = this.game.time.create(true);
+        timer.add(300, this.dead, this);
+        timer.start();
 
         var striking: Phaser.Tween = this.game.add.tween(this);
         striking.to({ x: (this.x - 50) }, 100);
